@@ -48,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
                     "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
             Pattern pattern = Pattern.compile(password_regex);
             Matcher matcher = pattern.matcher(password);
+
             if(username.isEmpty() || password.isEmpty() || repassword.isEmpty()){
                 showDialog("Bạn phải nhập đầy đủ thông tin");
             } else if (!password.equals(repassword)) {
