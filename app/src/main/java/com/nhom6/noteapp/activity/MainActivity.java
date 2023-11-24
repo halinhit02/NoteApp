@@ -1,9 +1,10 @@
-package com.nhom6.noteapp;
+package com.nhom6.noteapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.ActivityMainBinding;
 import com.nhom6.noteapp.model.DAO.CategoryDAO;
 import com.nhom6.noteapp.model.DAO.TaskDAO;
