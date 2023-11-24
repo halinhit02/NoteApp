@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
+import com.nhom6.noteapp.databinding.ActivityRegisterBinding;
 import com.nhom6.noteapp.model.DAO.UserDAO;
 import com.nhom6.noteapp.model.DTO.User;
 
@@ -17,22 +19,20 @@ import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     private UserDAO userDAO;
+    private ActivityRegisterBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        EditText editText_username = findViewById(R.id.editText_register_username);
-        EditText editText_name = findViewById(R.id.editText_register_name);
-        EditText editText_password = findViewById(R.id.editText_register_pass);
-        EditText editText_repassword = findViewById(R.id.editText_register_repass);
-        Button btn_register = findViewById(R.id.btn_register);
-        btn_register.setOnClickListener(view->{
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
+        setContentView(binding.getRoot());
+
+        binding.btnRegister.setOnClickListener(view->{
             userDAO = new UserDAO(this);
             ArrayList<User> userArrayList = userDAO.getAll();
-            String username = editText_username.getText().toString();
-            String name = editText_name.getText().toString();
-            String password = editText_password.getText().toString();
-            String repassword = editText_repassword.getText().toString();
+            String username = binding.editTextRegisterUsername.getText().toString();
+            String name = binding.editTextRegisterName.getText().toString();
+            String password = binding.editTextRegisterPass.getText().toString();
+            String repassword = binding.editTextRegisterRepass.getText().toString();
 
             //Kiểm tra tên đăng nhập
             boolean isNewUsername = true;
@@ -42,13 +42,11 @@ public class RegisterActivity extends AppCompatActivity {
                     break;
                 }
             }
-
             //Kiểm tra mật khẩu
             String password_regex =
                     "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
             Pattern pattern = Pattern.compile(password_regex);
             Matcher matcher = pattern.matcher(password);
-
             if(username.isEmpty() || password.isEmpty() || repassword.isEmpty()){
                 showDialog("Bạn phải nhập đầy đủ thông tin");
             } else if (!password.equals(repassword)) {

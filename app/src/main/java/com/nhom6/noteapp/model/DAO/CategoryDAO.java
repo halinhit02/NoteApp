@@ -23,18 +23,18 @@ public class CategoryDAO {
 
     public long insert(Category category){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("name",category.getName());
-        contentValues.put("des",category.getDes());
-        contentValues.put("date",category.getDate());
+        contentValues.put("name_category",category.getName());
+        contentValues.put("des_category",category.getDes());
+        contentValues.put("datecreate_category",category.getDate());
         long res = db.insert("Categorys",null,contentValues);
         return  res;
     }
 
     public long update(Category category){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("name",category.getName());
-        contentValues.put("des",category.getDes());
-        contentValues.put("date",category.getDate());
+        contentValues.put("name_category",category.getName());
+        contentValues.put("des_category",category.getDes());
+        contentValues.put("datecreate_category",category.getDate());
         long res = db.update("Categorys",contentValues,"id=?",new String[]{category.getId()+""});
         return res ;
     }
@@ -68,10 +68,10 @@ public class CategoryDAO {
         Cursor c = db.rawQuery(sql,selectionArgs);
         while (c.moveToNext()){
             Category obj = new Category();
-            obj.setId(Integer.parseInt(c.getString(c.getColumnIndex("id"))));
-            obj.setName(c.getString(c.getColumnIndex("name")));
-            obj.setDes(c.getString(c.getColumnIndex("des")));
-            obj.setDate(c.getString(c.getColumnIndex("date")));
+            obj.setId(Integer.parseInt(c.getString(c.getColumnIndex("id_category"))));
+            obj.setName(c.getString(c.getColumnIndex("name_category")));
+            obj.setDes(c.getString(c.getColumnIndex("des_category")));
+            obj.setDate(c.getString(c.getColumnIndex("date_category")));
 
             list.add(obj);
         }

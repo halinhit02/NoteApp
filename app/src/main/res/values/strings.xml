@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">NoteApp</string>
+    //hint
+    <string name="hint_username">User name...</string>
+    <string name="hint_password">Password...</string>
+    <string name="hint_fullname">FullName...</string>
+    <string name="hint_username_register">User name...</string>
+    <string name="hint_password_register">Password...</string>
+    <string name="hint_confirmpassword_register">Confirm password...</string>
+
+    // button
+    <string name="button_login">Login</string>
+    <string name="button_register">Sign up</string>
+    //textview
+    <string name="textview_login">Login</string>
+    <string name="textview_register">sign up</string>
+    <string name="textview_asforanaccount">Bạn chưa có tài khoản?</string>
 </resources>

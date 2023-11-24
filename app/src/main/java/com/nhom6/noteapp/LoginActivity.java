@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
+import com.nhom6.noteapp.databinding.ActivityLoginBinding;
 import com.nhom6.noteapp.model.DAO.UserDAO;
 import com.nhom6.noteapp.model.DTO.User;
 
@@ -16,18 +18,19 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     private UserDAO userDAO;
+
+
+    private ActivityLoginBinding binding ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        EditText editText_username = findViewById(R.id.editText_username);
-        EditText editText_password = findViewById(R.id.editText_password);
-        Button btn_login = findViewById(R.id.btn_login);
-        Button btn_move_register = findViewById(R.id.btn_move_register);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        setContentView(binding.getRoot());
+
         userDAO = new UserDAO(this);
-        btn_login.setOnClickListener(view->{
-            String username = editText_username.getText().toString();
-            String password = editText_password.getText().toString();
+        binding.btnLogin.setOnClickListener(view->{
+            String username = binding.editTextUsername.getText().toString().trim();
+            String password = binding.editTextPassword.getText().toString().trim();
             List<User> userList = userDAO.getUserByUsername(username);
             if(username.isEmpty() || password.isEmpty()){
                 showDialog("Bạn phải nhập đầy đủ thông tin");
@@ -47,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btn_move_register.setOnClickListener(view->{
+        binding.tvMoveRegister.setOnClickListener(view->{
             Intent intent1 = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent1);
         });

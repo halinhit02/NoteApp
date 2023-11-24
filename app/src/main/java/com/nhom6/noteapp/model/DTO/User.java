@@ -9,12 +9,8 @@ public class User {
     public User() {
     }
 
-<<<<<<< HEAD
     public User(int id, String name, String userName, String password) {
         this.id = id;
-=======
-    public User(String name, String userName, String password) {
->>>>>>> origin/develop/ui
         this.name = name;
         this.userName = userName;
         this.password = password;
@@ -42,6 +38,12 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public User(String name, String userName, String password) {
+        this.name = name;
+        this.userName = userName;
+        this.password = password;
     }
 
     public String getPassword() {

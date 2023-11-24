@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.nhom6.noteapp.databinding.ActivityMainBinding;
 import com.nhom6.noteapp.model.DAO.CategoryDAO;
 import com.nhom6.noteapp.model.DAO.TaskDAO;
 import com.nhom6.noteapp.model.DAO.UserDAO;
@@ -12,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private UserDAO userDAO;
     private CategoryDAO categoryDAO;
     private TaskDAO taskDAO;
+    private ActivityMainBinding activityMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

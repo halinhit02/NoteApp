@@ -22,22 +22,22 @@ public class TaskDAO {
 
     public long insert(Task task){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("tiitle",task.getTitle());
-        contentValues.put("des",task.getDes());
-        contentValues.put("time",task.getTime());
-        contentValues.put("done",task.getDone());
-        contentValues.put("score",task.getScore());
+        contentValues.put("title_task",task.getTitle());
+        contentValues.put("des_task",task.getDes());
+        contentValues.put("time_task",task.getTime());
+        contentValues.put("done_task",task.getDone());
+        contentValues.put("score_task",task.getScore());
         long res = db.insert("Tasks",null,contentValues);
         return  res;
     }
 
     public long update(Task task){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("tiitle",task.getTitle());
-        contentValues.put("des",task.getDes());
-        contentValues.put("time",task.getTime());
-        contentValues.put("done",task.getDone());
-        contentValues.put("score",task.getScore());
+        contentValues.put("title_task",task.getTitle());
+        contentValues.put("des_task",task.getDes());
+        contentValues.put("time_task",task.getTime());
+        contentValues.put("done_task",task.getDone());
+        contentValues.put("score_task",task.getScore());
         long res = db.update("Tasks",contentValues,"id=?",new String[]{task.getId()+""});
         return res ;
     }
@@ -67,12 +67,12 @@ public class TaskDAO {
         Cursor c = db.rawQuery(sql,selectionArgs);
         while (c.moveToNext()){
             Task obj = new Task();
-            obj.setId(Integer.parseInt(c.getString(c.getColumnIndex("id"))));
-            obj.setTitle(c.getString(c.getColumnIndex("title")));
-            obj.setDes(c.getString(c.getColumnIndex("des")));
-            obj.setTime(c.getString(c.getColumnIndex("time")));
-            obj.setDone(Integer.parseInt(c.getString(c.getColumnIndex("done"))));
-            obj.setScore(c.getString(c.getColumnIndex("score")));
+            obj.setId(Integer.parseInt(c.getString(c.getColumnIndex("id_task"))));
+            obj.setTitle(c.getString(c.getColumnIndex("title_task")));
+            obj.setDes(c.getString(c.getColumnIndex("des_task")));
+            obj.setTime(c.getString(c.getColumnIndex("time_task")));
+            obj.setDone(Integer.parseInt(c.getString(c.getColumnIndex("done_task"))));
+            obj.setScore(c.getString(c.getColumnIndex("score_task")));
             list.add(obj);
         }
         return list;
