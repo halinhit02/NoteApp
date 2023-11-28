@@ -4,7 +4,9 @@ public class Task {
     private int id;
     private String title;
     private String des;
+    private String note;
     private String time;
+    private String date;
     private int done;
     private String score;
 
@@ -66,5 +68,21 @@ public class Task {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

@@ -33,7 +33,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 "id_task INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "title_task TEXT NOT NULL," +
                 "des_task TEXT NOT NULL," +
+                "note_task TEXT NOT NULL," +
                 "time_task TEXT NOT NULL," +
+                "date_task TEXT NOT NULL," +
                 "done_task INTEGER NOT NULL," +
                 "score_task TEXT NOT NULL," +
                 "id_category INTEGER  REFERENCES Categorys(id_category))" ;
