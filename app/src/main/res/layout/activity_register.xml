@@ -1,52 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/blue">
+            <ImageView
+                android:id="@+id/imgPreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_back24"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/textview_register"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <EditText
                 android:id="@+id/editText_register_name"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/margin_small"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_fullname" />
+                android:padding="@dimen/padding_small"
+                android:background="@drawable/custom_edittext"
+                android:layout_height="@dimen/height_edittext"
+                android:hint="@string/hint_fullname"
+                tools:ignore="Autofill,TextFields" />
 
             <EditText
                 android:id="@+id/editText_register_username"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/margin_small"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small"
+                android:background="@drawable/custom_edittext"
+                android:layout_height="@dimen/height_edittext"
+                tools:ignore="Autofill,TextFields"
                 android:hint="@string/hint_username_register" />
 
             <EditText
                 android:id="@+id/editText_register_pass"
                 android:layout_width="match_parent"
-                android:layout_margin="8dp"
-                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:padding="@dimen/padding_small"
+                android:background="@drawable/custom_edittext"
+                android:layout_height="@dimen/height_edittext"
+                tools:ignore="Autofill,TextFields"
                 android:hint="@string/hint_password_register" />
 
             <EditText
                 android:id="@+id/editText_register_repass"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/margin_small"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                tools:ignore="Autofill,TextFields"
+                android:padding="@dimen/padding_small"
+                android:background="@drawable/custom_edittext"
+                android:layout_height="@dimen/height_edittext"
                 android:hint="@string/hint_confirmpassword_register" />
 
             <Button
                 android:id="@+id/btn_register"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/margin_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/blue"

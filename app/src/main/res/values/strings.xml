@@ -14,7 +14,7 @@
     //textview
     <string name="textview_login">Login</string>
     <string name="textview_register">sign up</string>
-    <string name="textview_asforanaccount">Bạn chưa có tài khoản?</string>
+    <string name="textview_asforanaccount">Do not have an account?</string>
 
     //text error
     <string name="error_username">Username  cannot be blank</string>

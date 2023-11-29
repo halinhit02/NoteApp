@@ -1,6 +1,7 @@
 package com.nhom6.noteapp.activity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,6 +67,9 @@ public class RegisterActivity extends AppCompatActivity {
                     showDialog("Registration failed, there was an error connecting to the database");
                 }
             }
+        });
+        binding.imgPreview.setOnClickListener(v->{
+            finish();
         });
     }
 

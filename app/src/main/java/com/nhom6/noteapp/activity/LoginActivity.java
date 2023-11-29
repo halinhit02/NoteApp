@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         if(userName.isEmpty()){
             binding.editTextUsername.setError("Username  cannot be blank");
             return false;
-        } else if( password.isEmpty()){
+        } if( password.isEmpty()){
             binding.editTextUsername.setError("Password  cannot be blank");
             return false;
         }
