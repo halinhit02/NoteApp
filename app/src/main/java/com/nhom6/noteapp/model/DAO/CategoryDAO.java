@@ -25,6 +25,7 @@ public class CategoryDAO {
         contentValues.put("name_category",category.getName());
         contentValues.put("des_category",category.getDes());
         contentValues.put("datecreate_category",category.getDate());
+        contentValues.put("id_user",category.getId_user());
         long res = db.insert("Categorys",null,contentValues);
         return  res;
     }
@@ -34,16 +35,14 @@ public class CategoryDAO {
         contentValues.put("name_category",category.getName());
         contentValues.put("des_category",category.getDes());
         contentValues.put("datecreate_category",category.getDate());
-        long res = db.update("Categorys",contentValues,"id=?",new String[]{category.getId()+""});
+        contentValues.put("id_user",category.getId_user());
+        long res = db.update("Categorys",contentValues,"id_category=?",new String[]{category.getId()+""});
         return res ;
     }
 
     public int delete(int id){
-        Cursor cursor = db.rawQuery("SELECT * FROM Tasks WHERE id_category = ?",new String[]{String.valueOf(id)});
-        if (cursor.getCount()!=0){
-            return -1 ;
-        }
-        long  check = db.delete("Categorys","id=?",new String[]{String.valueOf(id)});
+
+        long  check = db.delete("Categorys","id_category=?",new String[]{String.valueOf(id)});
         if(check==-1){
             return  0 ;
         }
@@ -51,11 +50,11 @@ public class CategoryDAO {
     }
 
     public ArrayList<Category> getAll(){
-        String sql="SELECT * FROM Users";
+        String sql="SELECT * FROM Categorys";
         return (ArrayList<Category>) getData(sql);
     }
     public Category getID(String id){
-        String sql = "SELECT * FROM Categorys WHERE id=?";
+        String sql = "SELECT * FROM Categorys WHERE id_category=?";
         List<Category> list = getData(sql,id);
         return list.get(0);
     }
@@ -70,7 +69,8 @@ public class CategoryDAO {
             obj.setId(Integer.parseInt(c.getString(c.getColumnIndex("id_category"))));
             obj.setName(c.getString(c.getColumnIndex("name_category")));
             obj.setDes(c.getString(c.getColumnIndex("des_category")));
-            obj.setDate(c.getString(c.getColumnIndex("date_category")));
+            obj.setDate(c.getString(c.getColumnIndex("datecreate_category")));
+            obj.setId_user(Integer.parseInt(c.getString(c.getColumnIndex("id_user"))));
 
             list.add(obj);
         }

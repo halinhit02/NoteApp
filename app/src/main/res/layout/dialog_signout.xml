@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_medium"
+    android:orientation="vertical"
+    android:background="@drawable/background_item_recycle">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="@dimen/margin_small"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/textview_signout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:id="@+id/btnOke"
+            android:text="@string/button_ok"
+            android:padding="@dimen/padding_small"
+            android:layout_margin="@dimen/margin_small"
+            android:backgroundTint="@color/orange"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_margin="@dimen/margin_small"
+            android:padding="@dimen/padding_small"
+            android:textSize="16sp"
+            android:text="@string/button_cancel"
+            android:id="@+id/btnCancelSignout"
+            android:backgroundTint="@color/dark_gray"/>
+    </LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

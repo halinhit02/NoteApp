@@ -7,4 +7,6 @@
     <dimen name="padding_medium">18dp</dimen>
 
     <dimen name="height_edittext">50dp</dimen>
+
+    <dimen name="img_size">42dp</dimen>
 </resources>

@@ -67,6 +67,7 @@
                 android:layout_margin="@dimen/margin_small"
                 android:padding="@dimen/padding_small"
                 android:background="@drawable/custom_edittext"
+                android:inputType="textPassword"
                 android:layout_height="@dimen/height_edittext"
                 tools:ignore="Autofill,TextFields"
                 android:hint="@string/hint_password_register" />
@@ -77,6 +78,7 @@
                 android:layout_width="match_parent"
                 tools:ignore="Autofill,TextFields"
                 android:padding="@dimen/padding_small"
+                android:inputType="textPassword"
                 android:background="@drawable/custom_edittext"
                 android:layout_height="@dimen/height_edittext"
                 android:hint="@string/hint_confirmpassword_register" />

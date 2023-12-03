@@ -5,6 +5,7 @@ public class Category {
     private String name;
     private  String des;
     private String date;
+    private int id_user;
    public  Category(){}
 
     public Category(int id, String name, String des, String date) {
@@ -12,6 +13,14 @@ public class Category {
         this.name = name;
         this.des = des;
         this.date = date;
+    }
+
+    public int getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
     }
 
     public int getId() {

@@ -31,9 +31,9 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(view->{
             String userName = binding.editTextUsername.getText().toString().trim();
             String password = binding.editTextPassword.getText().toString().trim();
-            List<User> userList = userDAO.getUserByUsername(userName);
-            if (checkLogin(userName,password,userList)){
-                User user = userList.get(0);
+
+            if (checkLogin(userName,password,userDAO.getUserByUsername(userName))){
+                User user = userDAO.getUserByUsername(userName);
                 String name = user.getName();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("Name", name);
@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private boolean checkLogin(String userName,String password,List<User> userList){
+    private boolean checkLogin(String userName,String password,User user){
 
         if(userName.isEmpty()){
             binding.editTextUsername.setError("Username  cannot be blank");
@@ -55,14 +55,13 @@ public class LoginActivity extends AppCompatActivity {
             binding.editTextUsername.setError("Password  cannot be blank");
             return false;
         }
-        else if (userList.size()==0) {
-            showDialog("Tên đăng nhập không tồn tại");
+        else if (user==null) {
+            showDialog("Username does not exist");
             return false;
         } else {
-            User user = userList.get(0);
             boolean isPasswordCorrect = BCrypt.checkpw(password, user.getPassword());
             if (!isPasswordCorrect) {
-                showDialog("Sai mật khẩu");
+                showDialog("Wrong password");
                 return false;
             } else {
                return true;
@@ -73,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     private void showDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
-                .setPositiveButton("Đóng", (dialog, id) -> {
+                .setPositiveButton("Close", (dialog, id) -> {
                     dialog.dismiss();
                 });
         AlertDialog dialog = builder.create();

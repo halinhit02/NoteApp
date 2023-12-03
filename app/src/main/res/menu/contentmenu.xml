@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/content_all"
+        tools:ignore="MenuTitle"
+        android:title="All"/>
+    <item android:id="@+id/content_finish"
+        tools:ignore="MenuTitle"
+        android:icon="@mipmap/ic_finish"
+        android:title="Done"/>
+    <item android:id="@+id/content_unfinish"
+        tools:ignore="MenuTitle"
+        android:icon="@mipmap/ic_unfinish"
+        android:title="Unfinished work"/>
+</menu>

@@ -7,15 +7,26 @@
     <string name="hint_username_register">User name...</string>
     <string name="hint_password_register">Password...</string>
     <string name="hint_confirmpassword_register">Confirm password...</string>
+    <string name="hint_searchview">Search...</string>
+    <string name="hint_namecategory">Name Category...</string>
+    <string name="hint_describe">Describe...</string>
 
     // button
     <string name="button_login">Login</string>
     <string name="button_register">Sign up</string>
+    <string name="button_add">Add</string>
+    <string name="button_ok">Oke</string>
+    <string name="button_cancel">Cancel</string>
     //textview
     <string name="textview_login">Login</string>
     <string name="textview_register">sign up</string>
     <string name="textview_asforanaccount">Do not have an account?</string>
+    <string name="textview_filter">Filter</string>
+    <string name="textview_addcategory">Add category</string>
+    <string name="textview_signout">Are you sure you want to sign out?</string>
 
     //text error
     <string name="error_username">Username  cannot be blank</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -51,10 +51,10 @@ public class UserDAO {
         return list.get(0);
     }
 
-    public List<User> getUserByUsername(String username){
+    public User getUserByUsername(String username){
         String sql = "SELECT * FROM Users WHERE username_user=?";
         List<User> list = getData(sql,username);
-        return list;
+        return list.get(0);
     }
     @SuppressLint("Range")
     private List<User> getData(String sql, String...selectionArgs) {

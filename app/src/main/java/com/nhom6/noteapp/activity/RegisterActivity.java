@@ -63,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                 try {
                     userDAO.insert(user);
                     showDialog("Registration successful, please log in to use the service");
+                    finish();
                 } catch (Exception e1) {
                     showDialog("Registration failed, there was an error connecting to the database");
                 }

@@ -42,6 +42,7 @@ public class TaskDAO {
         contentValues.put("date_task",task.getTime());
         contentValues.put("done_task",task.getDone());
         contentValues.put("score_task",task.getScore());
+        contentValues.put("id_category",task.getId_category());
         long res = db.update("Tasks",contentValues,"id=?",new String[]{task.getId()+""});
         return res ;
     }
@@ -55,11 +56,11 @@ public class TaskDAO {
     }
 
     public ArrayList<Task> getAll(){
-        String sql="SELECT * FROM Users";
+        String sql="SELECT * FROM Tasks";
         return (ArrayList<Task>) getData(sql);
     }
     public Task getID(String id){
-        String sql = "SELECT * FROM Categorys WHERE id=?";
+        String sql = "SELECT * FROM Tasks WHERE id=?";
         List<Task> list = getData(sql,id);
         return list.get(0);
     }
@@ -79,6 +80,7 @@ public class TaskDAO {
             obj.setDate(c.getString(c.getColumnIndex("date_task")));
             obj.setDone(Integer.parseInt(c.getString(c.getColumnIndex("done_task"))));
             obj.setScore(c.getString(c.getColumnIndex("score_task")));
+            obj.setId(Integer.parseInt(c.getString(c.getColumnIndex("id_category"))));
             list.add(obj);
         }
         return list;

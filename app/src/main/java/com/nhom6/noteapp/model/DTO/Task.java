@@ -9,6 +9,7 @@ public class Task {
     private String date;
     private int done;
     private String score;
+    private int id_category;
 
     public Task() {
     }
@@ -20,6 +21,14 @@ public class Task {
         this.time = time;
         this.done = done;
         this.score = score;
+    }
+
+    public int getId_category() {
+        return id_category;
+    }
+
+    public void setId_category(int id_category) {
+        this.id_category = id_category;
     }
 
     public int getId() {

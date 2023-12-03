@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
     static final String dbName = "Noteapp";
-    static final int dbVersion = 1;
+    static final int dbVersion = 6;
 
     public DbHelper(Context context) {
         super(context, dbName, null, dbVersion);
@@ -25,7 +25,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "id_category INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "name_category TEXT NOT NULL," +
                 "des_category TEXT NOT NULL," +
-                "datecreate_category DATE NOT NULL," +
+                "datecreate_category TEXT NOT NULL," +
                 "id_user INTEGER  REFERENCES Users(id_user))" ;
         db.execSQL(createTableCategory);
 
