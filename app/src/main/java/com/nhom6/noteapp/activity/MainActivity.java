@@ -1,12 +1,12 @@
 package com.nhom6.noteapp.activity;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.os.Bundle;
 
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.ActivityMainBinding;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new CategoryFragment());
     }
 
-    private  void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment, fragment);

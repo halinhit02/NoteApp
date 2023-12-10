@@ -10,6 +10,7 @@
     <string name="hint_searchview">Search...</string>
     <string name="hint_namecategory">Name Category...</string>
     <string name="hint_describe">Describe...</string>
+    <string name="hint_work">Enter Work...</string>
 
     // button
     <string name="button_login">Login</string>
@@ -24,6 +25,10 @@
     <string name="textview_filter">Filter</string>
     <string name="textview_addcategory">Add category</string>
     <string name="textview_signout">Are you sure you want to sign out?</string>
+    <string name="textview_add_task">Add Task</string>
+    <string name="textview_duration">Duration</string>
+    <string name="textview_task">Task</string>
+    <string name="textview_des">Description</string>
 
     //text error
     <string name="error_username">Username  cannot be blank</string>

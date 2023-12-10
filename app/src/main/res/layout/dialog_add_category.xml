@@ -1,73 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_margin="@dimen/margin_small"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:background="@drawable/background_item_recycle"
-    android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="@string/textview_addcategory"
-        android:layout_margin="@dimen/margin_small"
-        />
+<layout>
 
-    <EditText
-        android:id="@+id/edtTitleCategory"
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_edittext"
         android:layout_margin="@dimen/margin_small"
-        android:padding="@dimen/margin_small"
-        android:hint="@string/hint_namecategory"
-        android:background="@drawable/custom_edittext"
-        tools:ignore="Autofill,TextFields" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/background_item_recycle"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/edtDesCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:padding="@dimen/padding_small"
-        android:background="@drawable/custom_edittext"
-        android:layout_margin="@dimen/margin_small"
-        android:hint="@string/hint_describe"
-        android:lines="4"
-        android:maxLines="10"
-        android:minLines="5"
-        android:scrollbars="vertical"
-        tools:ignore="Autofill" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/btnCancel"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/textview_addcategory"
             android:layout_margin="@dimen/margin_small"
-            android:text="@string/button_cancel"
-            android:backgroundTint="@color/orange"
-            tools:ignore="ButtonStyle" />
+            />
 
-        <Button
-            android:id="@+id/btnAdd"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/edtTitleCategory"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_edittext"
+            android:layout_margin="@dimen/margin_small"
+            android:padding="@dimen/margin_small"
+            android:hint="@string/hint_namecategory"
+            android:background="@drawable/custom_edittext"
+            tools:ignore="Autofill,TextFields" />
+
+        <EditText
+            android:id="@+id/edtDesCategory"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:padding="@dimen/padding_small"
+            android:background="@drawable/custom_edittext"
             android:layout_margin="@dimen/margin_small"
-            android:text="@string/button_add"
-            android:backgroundTint="@color/orange"
-            tools:ignore="ButtonStyle" />
+            android:hint="@string/hint_describe"
+            android:lines="4"
+            android:maxLines="10"
+            android:minLines="5"
+            android:scrollbars="vertical"
+            tools:ignore="Autofill" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:text="@string/button_cancel"
+                android:backgroundTint="@color/orange"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:text="@string/button_add"
+                android:backgroundTint="@color/orange"
+                tools:ignore="ButtonStyle" />
 
 
-    </LinearLayout>
+        </LinearLayout>
 
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

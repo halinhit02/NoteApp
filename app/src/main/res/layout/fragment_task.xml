@@ -5,13 +5,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/task"
         tools:context=".fragment.TaskFragment">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:padding="@dimen/padding_small"
             android:weightSum="9"
@@ -20,23 +21,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="MissingConstraints">
 
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:src="@drawable/ic_back_foreground" />
+
             <TextView
-                android:id="@+id/tvNameUser"
+                android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_small"
+                android:layout_marginHorizontal="@dimen/margin_small"
                 android:layout_weight="8"
-                android:text="@string/app_name"
+                android:gravity="center"
+                android:text="Danh mục"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/imgLogout"
+                android:id="@+id/imgSend"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="end"
                 android:layout_weight="1"
-                android:src="@mipmap/ic_logout_foreground" />
+                android:src="@drawable/ic_send_foreground" />
         </LinearLayout>
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider"

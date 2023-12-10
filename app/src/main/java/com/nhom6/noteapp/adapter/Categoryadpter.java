@@ -118,7 +118,6 @@ public class Categoryadpter extends RecyclerView.Adapter<Categoryadpter.Category
     public interface CategoryClick {
         void onClick(View view, int position);
 
-//    void onClick(HoaDon hoaDon);
     }
 
 

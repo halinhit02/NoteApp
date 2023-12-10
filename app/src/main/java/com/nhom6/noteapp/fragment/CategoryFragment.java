@@ -1,24 +1,9 @@
 package com.nhom6.noteapp.fragment;
 
-import static androidx.databinding.DataBindingUtil.getBinding;
-
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,29 +11,37 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.nhom6.noteapp.R;
-import com.nhom6.noteapp.activity.MainActivity;
 import com.nhom6.noteapp.adapter.Categoryadpter;
+import com.nhom6.noteapp.databinding.DialogAddCategoryBinding;
+import com.nhom6.noteapp.databinding.DialogAddTaskBinding;
 import com.nhom6.noteapp.databinding.FragmentCategoryBinding;
 import com.nhom6.noteapp.model.DAO.CategoryDAO;
 import com.nhom6.noteapp.model.DTO.Category;
+import com.nhom6.noteapp.viewmodel.SharedViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class CategoryFragment extends Fragment implements Categoryadpter.CategoryClick{
 
     private  FragmentCategoryBinding binding;
+
 
     public static CategoryFragment newInstance(String param1, String param2) {
         CategoryFragment fragment = new CategoryFragment();
@@ -64,6 +57,8 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
     }
 
     @Override
@@ -78,6 +73,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
     private Categoryadpter categoryadpter;
     private ArrayList<Category> listCategory;
     private LinearLayoutManager linearLayoutManager;
+    private SharedViewModel sharedViewModel;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -88,6 +84,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
         categoryDAO = new CategoryDAO(getContext());
         listCategory = categoryDAO.getAll();
         categoryadpter = new Categoryadpter(getContext(),listCategory,this);
+
         binding.searchCategory.clearFocus();
         binding.searchCategory.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -104,57 +101,11 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
 
         binding.rcvCategory.setAdapter(categoryadpter);
 
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                int pos = viewHolder.getLayoutPosition();
-//                int targetpos = target.getLayoutPosition();
-//                Category category = listCategory.get(pos);
-//                listCategory.remove(pos);
-//                listCategory.add(targetpos,category);
-//                categoryadpter.notifyItemMoved(pos,targetpos);
-//                return true;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                AlertDialog.Builder builder= new AlertDialog.Builder(getContext());
-//                builder.setTitle("Are you sure you want to delete ?");
-//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        int check = categoryDAO.delete(listCategory.get(viewHolder.getLayoutPosition()).getId());
-//                        switch (check){
-//                            case  1 :
-//                                listCategory.clear();
-//                                listCategory.addAll(categoryDAO.getAll());
-//                                categoryadpter.notifyDataSetChanged();
-//                                Toast.makeText(getContext(),"Deleted successfully",Toast.LENGTH_SHORT).show();
-//                                break;
-//                            case 0 :
-//                                Toast.makeText(getContext(),"Delete failed",Toast.LENGTH_SHORT).show();
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//
-//                    }
-//                });
-//                builder.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.cancel();
-//                    }
-//                });
-//                builder.show();
-//            }
-//        });
-//        itemTouchHelper.attachToRecyclerView(binding.rcvCategory);
-
         binding.imgAddCategory.setOnClickListener(v -> {
             Dialog dialog = new Dialog(getContext());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.dialog_add_category);
+            DialogAddCategoryBinding bindingDialog = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout. dialog_add_category, null, false);
+            dialog.setContentView(bindingDialog.getRoot());
             Window window = dialog.getWindow();
             if(window==null){
                 return;
@@ -165,27 +116,21 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
             windowacc.gravity = Gravity.NO_GRAVITY ;
             window.setAttributes(windowacc);
 
-            EditText edtTitle,edtDes;
-            Button btnCancel,btnAdd;
-            btnCancel = dialog.findViewById(R.id.btnCancel);
-            btnAdd = dialog.findViewById(R.id.btnAdd);
-            edtTitle = dialog.findViewById(R.id.edtTitleCategory);
-            edtDes = dialog.findViewById(R.id.edtDesCategory);
 
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm-dd/MM/yyyy", Locale.getDefault());
             String currentDateandTime = sdf.format(new Date());
-            btnAdd.setOnClickListener(new View.OnClickListener() {
+            bindingDialog.btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (edtTitle.getText().toString().trim().isEmpty()){
-                        edtTitle.setError("Can not leave the title blank");
-                    }if (edtDes.getText().toString().trim().isEmpty()){
-                        edtDes.setError("Can not leave the description blank");
+                    if (bindingDialog.edtTitleCategory.getText().toString().trim().isEmpty()){
+                        bindingDialog.edtTitleCategory.setError("Can not leave the title blank");
+                    }if (bindingDialog.edtDesCategory.getText().toString().trim().isEmpty()){
+                        bindingDialog.edtDesCategory.setError("Can not leave the description blank");
                     }else {
                         Category category1 = new Category();
-                        category1.setName(edtTitle.getText().toString().trim());
+                        category1.setName(bindingDialog.edtTitleCategory.getText().toString().trim());
                         category1.setDate(currentDateandTime);
-                        category1.setDes(edtDes.getText().toString().trim());
+                        category1.setDes(bindingDialog.edtDesCategory.getText().toString().trim());
                         long res = categoryDAO.insert(category1);
                         if (res>0){
                             Toast.makeText(getContext(),"Added category successfully",Toast.LENGTH_SHORT).show();
@@ -199,7 +144,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
                     }
                 }
             });
-            btnCancel.setOnClickListener(v1 -> {
+            bindingDialog.btnCancel.setOnClickListener(v1 -> {
                 dialog.cancel();
             });
 
@@ -259,8 +204,16 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
         }
     }
 
+    private  void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment, fragment);
+        fragmentTransaction.commit();
+    }
+
     @Override
     public void onClick(View view, int position) {
-        Toast.makeText(getContext(), "Test", Toast.LENGTH_SHORT).show();
+        replaceFragment(new TaskFragment());
+//        sharedViewModel.setNameData(listCategory.get(position).getName());
     }
 }
