@@ -56,32 +56,34 @@ public class TaskDAO {
     }
 
     public ArrayList<Task> getAll(){
-        String sql="SELECT * FROM Tasks";
-        return (ArrayList<Task>) getData(sql);
+        String sql="SELECT * FROM TasksWHERE id_category=?";
+        return (ArrayList<Task>) getDaTa(sql);
     }
     public Task getID(String id){
         String sql = "SELECT * FROM Tasks WHERE id=?";
-        List<Task> list = getData(sql,id);
+        List<Task> list = getDaTa(sql,id);
         return list.get(0);
     }
 
-    @SuppressLint("Range")
-    private List<Task> getData(String sql, String...selectionArgs) {
-
-        List<Task> list = new ArrayList<>();
-        Cursor c = db.rawQuery(sql,selectionArgs);
-        while (c.moveToNext()){
-            Task obj = new Task();
-            obj.setId(Integer.parseInt(c.getString(c.getColumnIndex("id_task"))));
-            obj.setTitle(c.getString(c.getColumnIndex("title_task")));
-            obj.setDes(c.getString(c.getColumnIndex("des_task")));
-            obj.setNote(c.getString(c.getColumnIndex("note_task")));
-            obj.setTime(c.getString(c.getColumnIndex("time_task")));
-            obj.setDate(c.getString(c.getColumnIndex("date_task")));
-            obj.setDone(Integer.parseInt(c.getString(c.getColumnIndex("done_task"))));
-            obj.setScore(c.getString(c.getColumnIndex("score_task")));
-            obj.setId(Integer.parseInt(c.getString(c.getColumnIndex("id_category"))));
-            list.add(obj);
+    public List<Task> getDaTa(String sql, String...selectionArgs){
+        List<Task> list=new ArrayList<>();
+        Cursor c=db.rawQuery(sql,selectionArgs);
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            while (!c.isAfterLast()) {
+                int a = c.getInt(0);
+                String b= c.getString(1);
+                String d = c.getString(2);
+                String e=c.getString(3);
+                String f = c.getString(4);
+                String g= c.getString(5);
+                int h = c.getInt(6);
+                String i = c.getString(7);
+                int k = c.getInt(8);
+                list.add(new Task(a,b,d,e,f,g,h,i,k));
+                c.moveToNext();
+            }
+            c.close();
         }
         return list;
     }

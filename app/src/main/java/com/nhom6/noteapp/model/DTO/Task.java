@@ -23,6 +23,18 @@ public class Task {
         this.score = score;
     }
 
+    public Task(int id, String title, String des, String note, String time, String date, int done, String score, int id_category) {
+        this.id = id;
+        this.title = title;
+        this.des = des;
+        this.note = note;
+        this.time = time;
+        this.date = date;
+        this.done = done;
+        this.score = score;
+        this.id_category = id_category;
+    }
+
     public int getId_category() {
         return id_category;
     }
