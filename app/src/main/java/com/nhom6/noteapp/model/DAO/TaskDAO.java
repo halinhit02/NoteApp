@@ -1,12 +1,11 @@
 package com.nhom6.noteapp.model.DAO;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.nhom6.noteapp.database.DbHelper;
+import com.nhom6.noteapp.model.DbHelper;
 import com.nhom6.noteapp.model.DTO.Task;
 
 import java.util.ArrayList;

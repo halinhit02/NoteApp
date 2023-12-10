@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.fragment;
+package com.nhom6.noteapp.view.fragment;
 
 import static androidx.databinding.DataBindingUtil.setContentView;
 
@@ -29,6 +29,7 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.nhom6.noteapp.Constance;
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.adapter.TaskAdapter;
 import com.nhom6.noteapp.databinding.DialogAddTaskBinding;
@@ -36,7 +37,7 @@ import com.nhom6.noteapp.databinding.FragmentTaskBinding;
 import com.nhom6.noteapp.model.DAO.TaskDAO;
 import com.nhom6.noteapp.model.DTO.Category;
 import com.nhom6.noteapp.model.DTO.Task;
-import com.nhom6.noteapp.viewmodel.SharedViewModel;
+import com.nhom6.noteapp.view.viewmodel.SharedViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +49,8 @@ public class TaskFragment extends Fragment {
 
     private FragmentTaskBinding binding;
     private SharedViewModel sharedViewModel;
+
+    Category category;
 
     public TaskFragment() {
         // Required empty public constructor
@@ -64,8 +67,13 @@ public class TaskFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-
         sharedViewModel.getNameData().observe(this, nameObserver);
+
+        Bundle data = getArguments();
+        if(data!= null) {
+            category = (Category) data.getSerializable(Constance.KEY_CATEGORY);
+        }
+
     }
 
     Observer<String> nameObserver = new Observer<String>() {
@@ -94,7 +102,7 @@ public class TaskFragment extends Fragment {
         taskDAO = new TaskDAO(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext());
         listTask = taskDAO.getAll();
-        taskAdapter = new TaskAdapter(listTask,getContext());
+        taskAdapter = new TaskAdapter(listTask, getContext());
 
         binding.rcvTasks.setLayoutManager(linearLayoutManager);
         binding.rcvTasks.setAdapter(taskAdapter);
@@ -103,18 +111,18 @@ public class TaskFragment extends Fragment {
 
             Dialog dialog = new Dialog(getContext());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            DialogAddTaskBinding bindingDialog = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout. dialog_add_task, null, false);
+            DialogAddTaskBinding bindingDialog = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_add_task, null, false);
             dialog.setContentView(bindingDialog.getRoot());
             Window window = dialog.getWindow();
-            if(window==null){
+            if (window == null) {
                 return;
             }
-            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams windowacc = window.getAttributes();
-            windowacc.gravity = Gravity.NO_GRAVITY ;
+            windowacc.gravity = Gravity.NO_GRAVITY;
             window.setAttributes(windowacc);
-            Calendar calendar =Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
 
@@ -128,9 +136,9 @@ public class TaskFragment extends Fragment {
                     TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                            bindingDialog.tvTime.setText(hourOfDay + ":" +minute);
+                            bindingDialog.tvTime.setText(hourOfDay + ":" + minute);
                         }
-                    },mHour,mMinute,false);
+                    }, mHour, mMinute, false);
                     timePickerDialog.show();
                 }
             });
@@ -139,13 +147,13 @@ public class TaskFragment extends Fragment {
                 DatePickerDialog dialog1 = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        int myear = year ;
-                        int mmonth = month ;
-                        int mdayOfMonth = dayOfMonth ;
-                        GregorianCalendar c = new GregorianCalendar(myear,mmonth,mdayOfMonth);
+                        int myear = year;
+                        int mmonth = month;
+                        int mdayOfMonth = dayOfMonth;
+                        GregorianCalendar c = new GregorianCalendar(myear, mmonth, mdayOfMonth);
                         bindingDialog.tvDate.setText(sdf.format(c.getTime()));
                     }
-                },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE));
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
                 dialog1.show();
             });
 
@@ -159,15 +167,18 @@ public class TaskFragment extends Fragment {
             bindingDialog.btnAddTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (bindingDialog.tvTime.getText().toString().trim().isEmpty()){
+                    if (bindingDialog.tvTime.getText().toString().trim().isEmpty()) {
                         bindingDialog.tvTime.setError("Select time to limit");
-                    }if (bindingDialog.tvDate.getText().toString().trim().isEmpty()){
+                    }
+                    if (bindingDialog.tvDate.getText().toString().trim().isEmpty()) {
                         bindingDialog.tvDate.setError("select the date to limit");
-                    }if (bindingDialog.edtTask.getText().toString().trim().isEmpty()){
+                    }
+                    if (bindingDialog.edtTask.getText().toString().trim().isEmpty()) {
                         bindingDialog.edtTask.setError("You have not entered a task yet");
-                    }if (bindingDialog.edtDesTask.getText().toString().trim().isEmpty()){
+                    }
+                    if (bindingDialog.edtDesTask.getText().toString().trim().isEmpty()) {
                         bindingDialog.edtDesTask.setError("You have not entered a description yet");
-                    }else {
+                    } else {
                         Task task = new Task();
                         task.setTitle(bindingDialog.edtTask.getText().toString().trim());
                         task.setDate(bindingDialog.tvDate.getText().toString().trim());
@@ -177,13 +188,13 @@ public class TaskFragment extends Fragment {
                         task.setNote("");
                         task.setDone(0);
                         long res = taskDAO.insert(task);
-                        if (res>0){
-                            Toast.makeText(getContext(),"Added task successfully",Toast.LENGTH_SHORT).show();
+                        if (res > 0) {
+                            Toast.makeText(getContext(), "Added task successfully", Toast.LENGTH_SHORT).show();
                             listTask.clear();
                             listTask.addAll(taskDAO.getAll());
                             taskAdapter.notifyDataSetChanged();
-                        }else {
-                            Toast.makeText(getContext(),"Add failure task",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Add failure task", Toast.LENGTH_SHORT).show();
                         }
                         dialog.dismiss();
                     }
@@ -200,7 +211,7 @@ public class TaskFragment extends Fragment {
 
     }
 
-    private  void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment, fragment);

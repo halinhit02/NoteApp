@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.database;
+package com.nhom6.noteapp.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

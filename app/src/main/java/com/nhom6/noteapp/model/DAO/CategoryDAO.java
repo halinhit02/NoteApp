@@ -6,7 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.nhom6.noteapp.database.DbHelper;
+import com.nhom6.noteapp.model.DbHelper;
 import com.nhom6.noteapp.model.DTO.Category;
 
 import java.util.ArrayList;

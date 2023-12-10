@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.fragment;
+package com.nhom6.noteapp.view.fragment;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,14 +23,14 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.nhom6.noteapp.Constance;
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.adapter.Categoryadpter;
 import com.nhom6.noteapp.databinding.DialogAddCategoryBinding;
-import com.nhom6.noteapp.databinding.DialogAddTaskBinding;
 import com.nhom6.noteapp.databinding.FragmentCategoryBinding;
 import com.nhom6.noteapp.model.DAO.CategoryDAO;
 import com.nhom6.noteapp.model.DTO.Category;
-import com.nhom6.noteapp.viewmodel.SharedViewModel;
+import com.nhom6.noteapp.view.viewmodel.SharedViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -204,16 +203,21 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
         }
     }
 
-    private  void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment, fragment);
-        fragmentTransaction.commit();
+    private  void replaceFragment(Fragment fragment, Bundle data) {
+        fragment.setArguments(data);
+        requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, fragment)
+                .commit();
     }
 
     @Override
-    public void onClick(View view, int position) {
-        replaceFragment(new TaskFragment());
+    public void onClick(Category item) {
+        Bundle data = new Bundle();
+        data.putSerializable(Constance.KEY_CATEGORY,item);
+        replaceFragment(new TaskFragment(),data);
 //        sharedViewModel.setNameData(listCategory.get(position).getName());
     }
+
 }

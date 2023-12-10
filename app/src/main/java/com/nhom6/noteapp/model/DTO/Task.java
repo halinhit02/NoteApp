@@ -1,6 +1,8 @@
 package com.nhom6.noteapp.model.DTO;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
     private int id;
     private String title;
     private String des;

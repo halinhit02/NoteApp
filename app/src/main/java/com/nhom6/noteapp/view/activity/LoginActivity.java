@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.activity;
+package com.nhom6.noteapp.view.activity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -13,8 +13,6 @@ import com.nhom6.noteapp.model.DAO.UserDAO;
 import com.nhom6.noteapp.model.DTO.User;
 
 import org.mindrot.jbcrypt.BCrypt;
-
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     private UserDAO userDAO;

@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.viewmodel;
+package com.nhom6.noteapp.view.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

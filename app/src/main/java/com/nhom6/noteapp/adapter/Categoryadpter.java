@@ -29,22 +29,23 @@ public class Categoryadpter extends RecyclerView.Adapter<Categoryadpter.Category
     private CategoryDAO categoryDAO;
     private CategoryClick categoryClick;
 
-    public Categoryadpter(Context context,ArrayList<Category> list,CategoryClick categoryClick){
-        this.context= context;
+    public Categoryadpter(Context context, ArrayList<Category> list, CategoryClick categoryClick) {
+        this.context = context;
         this.listData = list;
         categoryDAO = new CategoryDAO(context);
         this.categoryClick = categoryClick;
     }
 
-    public void setFilteredList(ArrayList<Category> filteredList){
-        this.listData=filteredList;
+    public void setFilteredList(ArrayList<Category> filteredList) {
+        this.listData = filteredList;
         notifyDataSetChanged();
     }
+
     @NonNull
     @Override
     public CategoryViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater =((Activity)context).getLayoutInflater();
-        View view = inflater.inflate(R.layout.itemcategory,parent,false);
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+        View view = inflater.inflate(R.layout.itemcategory, parent, false);
         return new CategoryViewholder(view);
     }
 
@@ -52,38 +53,38 @@ public class Categoryadpter extends RecyclerView.Adapter<Categoryadpter.Category
     public void onBindViewHolder(@NonNull CategoryViewholder holder, int position) {
         holder.bind(listData.get(position));
         holder.itemView.setOnLongClickListener(v -> {
-            AlertDialog.Builder builder= new AlertDialog.Builder(context);
-                builder.setTitle("Are you sure you want to delete ?");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        int check = categoryDAO.delete(listData.get(holder.getLayoutPosition()).getId());
-                        switch (check){
-                            case  1 :
-                                listData.clear();
-                                listData.addAll(categoryDAO.getAll());
-                                notifyDataSetChanged();
-                                Toast.makeText(context,"Deleted successfully",Toast.LENGTH_SHORT).show();
-                                break;
-                            case 0 :
-                                Toast.makeText(context,"Delete failed",Toast.LENGTH_SHORT).show();
-                                break;
-                            default:
-                                break;
-                        }
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Are you sure you want to delete ?");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    int check = categoryDAO.delete(listData.get(holder.getLayoutPosition()).getId());
+                    switch (check) {
+                        case 1:
+                            listData.clear();
+                            listData.addAll(categoryDAO.getAll());
+                            notifyDataSetChanged();
+                            Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 0:
+                            Toast.makeText(context, "Delete failed", Toast.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            break;
                     }
-                });
-                builder.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                builder.show();
+                }
+            });
+            builder.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+            builder.show();
             return false;
         });
-        holder.itemView.setOnClickListener(v -> {
-            holder.onClick(v);
+        holder.itemView.setOnClickListener (v-> {
+                categoryClick.onClick(listData.get(position));
         });
     }
 
@@ -92,10 +93,11 @@ public class Categoryadpter extends RecyclerView.Adapter<Categoryadpter.Category
         return listData.size();
     }
 
-    public class   CategoryViewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class CategoryViewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    TextView tvTitleCategory,tvTime,tvDes;
-    LinearLayout category;
+        TextView tvTitleCategory, tvTime, tvDes;
+        LinearLayout category;
+
         public CategoryViewholder(@NonNull View itemView) {
             super(itemView);
             tvTitleCategory = itemView.findViewById(R.id.tvTitleCategory);
@@ -104,7 +106,8 @@ public class Categoryadpter extends RecyclerView.Adapter<Categoryadpter.Category
             category = itemView.findViewById(R.id.category);
             itemView.setOnClickListener(this);
         }
-        public void bind(Category category){
+
+        public void bind(Category category) {
             tvTitleCategory.setText(category.getName());
             tvTime.setText(category.getDate());
             tvDes.setText(category.getDes());
@@ -112,13 +115,12 @@ public class Categoryadpter extends RecyclerView.Adapter<Categoryadpter.Category
 
         @Override
         public void onClick(View v) {
-            categoryClick.onClick(v,getLayoutPosition());
+       //     categoryClick.onClick(v, getLayoutPosition());
         }
     }
+
     public interface CategoryClick {
-        void onClick(View view, int position);
-
+        void onClick(Category item);
     }
-
 
 }

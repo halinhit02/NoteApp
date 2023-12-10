@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.activity;
+package com.nhom6.noteapp.view.activity;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.ActivityMainBinding;
-import com.nhom6.noteapp.fragment.CategoryFragment;
+import com.nhom6.noteapp.view.fragment.CategoryFragment;
 import com.nhom6.noteapp.model.DAO.CategoryDAO;
 import com.nhom6.noteapp.model.DAO.TaskDAO;
 import com.nhom6.noteapp.model.DAO.UserDAO;
