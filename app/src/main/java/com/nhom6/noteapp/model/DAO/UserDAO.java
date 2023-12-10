@@ -15,6 +15,7 @@ import java.util.List;
 public class UserDAO {
     DbHelper dbHelper ;
     SQLiteDatabase db ;
+
     public UserDAO(Context context){
         dbHelper = new DbHelper(context);
         db = dbHelper.getWritableDatabase();
