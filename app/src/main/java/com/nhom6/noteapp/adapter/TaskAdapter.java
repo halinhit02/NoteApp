@@ -1,11 +1,8 @@
 package com.nhom6.noteapp.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -51,12 +48,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
         private ItemTaskBinding binding ;
         public TaskViewholder(@NonNull ItemTaskBinding binding) {
             super(binding.getRoot());
+            this.binding = binding;
         }
         public void bind(Task task){
-            binding.tvTitleTask.setText(task.getTitle());
-            binding.tvTimeTask.setText(task.getTime() + " date " + task.getDate());
-            binding.tvDesTask.setText(task.getDes());
-            binding.tvPoinTask.setText(task.getScore());
+            if (task != null){
+                binding.tvTitleTask.setText(task.getTitle());
+                binding.tvTimeTask.setText(task.getTime() + " date " + task.getDate());
+                binding.tvDesTask.setText(task.getDes());
+                binding.tvPoinTask.setText(task.getScore());
+            }
+
         }
     }
 

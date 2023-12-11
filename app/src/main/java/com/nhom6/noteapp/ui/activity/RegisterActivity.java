@@ -1,10 +1,8 @@
-package com.nhom6.noteapp.view.activity;
+package com.nhom6.noteapp.ui.activity;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 

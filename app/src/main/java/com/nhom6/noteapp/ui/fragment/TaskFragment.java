@@ -1,6 +1,4 @@
-package com.nhom6.noteapp.view.fragment;
-
-import static androidx.databinding.DataBindingUtil.setContentView;
+package com.nhom6.noteapp.ui.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -8,6 +6,15 @@ import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,16 +26,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
-import android.widget.Toast;
-
 import com.nhom6.noteapp.Constance;
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.adapter.TaskAdapter;
@@ -37,7 +34,7 @@ import com.nhom6.noteapp.databinding.FragmentTaskBinding;
 import com.nhom6.noteapp.model.DAO.TaskDAO;
 import com.nhom6.noteapp.model.DTO.Category;
 import com.nhom6.noteapp.model.DTO.Task;
-import com.nhom6.noteapp.view.viewmodel.SharedViewModel;
+import com.nhom6.noteapp.ui.viewmodel.SharedViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,7 +70,6 @@ public class TaskFragment extends Fragment {
         if(data!= null) {
             category = (Category) data.getSerializable(Constance.KEY_CATEGORY);
         }
-
     }
 
     Observer<String> nameObserver = new Observer<String>() {
@@ -101,7 +97,7 @@ public class TaskFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         taskDAO = new TaskDAO(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext());
-        listTask = taskDAO.getAll();
+        listTask = taskDAO.getAll(String.valueOf(category.getId()));
         taskAdapter = new TaskAdapter(listTask, getContext());
 
         binding.rcvTasks.setLayoutManager(linearLayoutManager);
@@ -180,18 +176,20 @@ public class TaskFragment extends Fragment {
                         bindingDialog.edtDesTask.setError("You have not entered a description yet");
                     } else {
                         Task task = new Task();
+                        int id_category = category.getId();
                         task.setTitle(bindingDialog.edtTask.getText().toString().trim());
                         task.setDate(bindingDialog.tvDate.getText().toString().trim());
                         task.setTime(bindingDialog.tvTime.getText().toString().trim());
                         task.setDes(bindingDialog.edtDesTask.getText().toString().trim());
                         task.setScore("0/10");
                         task.setNote("");
+                        task.setId_category(id_category);
                         task.setDone(0);
                         long res = taskDAO.insert(task);
                         if (res > 0) {
                             Toast.makeText(getContext(), "Added task successfully", Toast.LENGTH_SHORT).show();
                             listTask.clear();
-                            listTask.addAll(taskDAO.getAll());
+                            listTask.addAll(taskDAO.getAll(String.valueOf(category.getId())));
                             taskAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getContext(), "Add failure task", Toast.LENGTH_SHORT).show();

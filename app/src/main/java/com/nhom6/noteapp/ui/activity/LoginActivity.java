@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.view.activity;
+package com.nhom6.noteapp.ui.activity;
 
 import android.app.AlertDialog;
 import android.content.Intent;

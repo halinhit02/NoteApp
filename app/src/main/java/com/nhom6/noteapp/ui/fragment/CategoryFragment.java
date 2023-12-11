@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.view.fragment;
+package com.nhom6.noteapp.ui.fragment;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -18,8 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -30,7 +28,7 @@ import com.nhom6.noteapp.databinding.DialogAddCategoryBinding;
 import com.nhom6.noteapp.databinding.FragmentCategoryBinding;
 import com.nhom6.noteapp.model.DAO.CategoryDAO;
 import com.nhom6.noteapp.model.DTO.Category;
-import com.nhom6.noteapp.view.viewmodel.SharedViewModel;
+import com.nhom6.noteapp.ui.viewmodel.SharedViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ import java.util.Locale;
 
 public class CategoryFragment extends Fragment implements Categoryadpter.CategoryClick{
 
-    private  FragmentCategoryBinding binding;
+    private FragmentCategoryBinding binding;
 
 
     public static CategoryFragment newInstance(String param1, String param2) {

@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.view.activity.task_detail;
+package com.nhom6.noteapp.ui.activity.task_detail;
 
 import android.app.Dialog;
 import android.content.Context;

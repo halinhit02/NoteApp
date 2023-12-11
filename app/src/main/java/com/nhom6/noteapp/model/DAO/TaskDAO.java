@@ -54,8 +54,10 @@ public class TaskDAO {
         return 1 ;
     }
 
-    public ArrayList<Task> getAll(){
-        String sql="SELECT * FROM TasksWHERE id_category=?";
+    public ArrayList<Task> getAll(String id_category){
+//        String sql="SELECT * FROM Tasks WHERE id_category=?";
+        String sql="SELECT * FROM Tasks";
+
         return (ArrayList<Task>) getDaTa(sql);
     }
     public Task getID(String id){
