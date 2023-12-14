@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
     static final String dbName = "Noteapp";
-    static final int dbVersion = 7;
+    static final int dbVersion = 8;
 
     public DbHelper(Context context) {
         super(context, dbName, null, dbVersion);

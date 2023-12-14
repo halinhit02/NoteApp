@@ -112,7 +112,6 @@ public class Categoryadpter extends RecyclerView.Adapter<Categoryadpter.Category
             tvTime.setText(category.getDate());
             tvDes.setText(category.getDes());
         }
-
         @Override
         public void onClick(View v) {
        //     categoryClick.onClick(v, getLayoutPosition());

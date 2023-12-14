@@ -1,8 +1,12 @@
 package com.nhom6.noteapp.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -10,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.ItemTaskBinding;
+import com.nhom6.noteapp.model.DAO.TaskDAO;
+import com.nhom6.noteapp.model.DTO.Category;
 import com.nhom6.noteapp.model.DTO.Task;
 
 import java.util.ArrayList;
@@ -18,10 +24,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
 
     private ArrayList<Task> listData;
     private Context mContext;
+    private TaskDAO taskDAO;
+    private TaskClick taskClick;
 
-    public TaskAdapter(ArrayList<Task> list, Context mContext){
+    public TaskAdapter(ArrayList<Task> list, Context mContext,TaskClick taskClick){
         this.listData = list;
         this.mContext = mContext;
+        taskDAO = new TaskDAO(mContext);
+        this.taskClick = taskClick;
     }
 
     @NonNull
@@ -35,6 +45,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
     @Override
     public void onBindViewHolder(@NonNull TaskViewholder holder, int position) {
         holder.bind(listData.get(position));
+        holder.itemView.setOnLongClickListener (v-> {
+            taskClick.onClick(listData.get(position));
+            return false;
+        });
     }
 
     @Override
@@ -42,7 +56,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
         return listData.size();
     }
 
-    public  class TaskViewholder extends RecyclerView.ViewHolder {
+    public  class TaskViewholder extends RecyclerView.ViewHolder  implements View.OnClickListener {
 
 
         private ItemTaskBinding binding ;
@@ -59,7 +73,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
             }
 
         }
+
+        @Override
+        public void onClick(View v) {
+
+        }
     }
 
+    public interface TaskClick {
+        void onClick(Task item);
+    }
 
 }

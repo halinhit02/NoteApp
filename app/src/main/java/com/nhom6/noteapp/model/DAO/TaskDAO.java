@@ -28,6 +28,7 @@ public class TaskDAO {
         contentValues.put("date_task",task.getTime());
         contentValues.put("done_task",task.getDone());
         contentValues.put("score_task",task.getScore());
+        contentValues.put("id_category",task.getId_category());
         long res = db.insert("Tasks",null,contentValues);
         return  res;
     }
@@ -42,12 +43,12 @@ public class TaskDAO {
         contentValues.put("done_task",task.getDone());
         contentValues.put("score_task",task.getScore());
         contentValues.put("id_category",task.getId_category());
-        long res = db.update("Tasks",contentValues,"id=?",new String[]{task.getId()+""});
+        long res = db.update("Tasks",contentValues,"id_task=?",new String[]{task.getId()+""});
         return res ;
     }
 
     public int delete(int id){
-        long  check = db.delete("Tasks","id=?",new String[]{String.valueOf(id)});
+        long  check = db.delete("Tasks","id_task=?",new String[]{String.valueOf(id)});
         if(check==-1){
             return  0 ;
         }
@@ -55,13 +56,11 @@ public class TaskDAO {
     }
 
     public ArrayList<Task> getAll(String id_category){
-//        String sql="SELECT * FROM Tasks WHERE id_category=?";
-        String sql="SELECT * FROM Tasks";
-
-        return (ArrayList<Task>) getDaTa(sql);
+        String sql="SELECT * FROM Tasks WHERE id_category=?";
+        return (ArrayList<Task>) getDaTa(sql,id_category);
     }
     public Task getID(String id){
-        String sql = "SELECT * FROM Tasks WHERE id=?";
+        String sql = "SELECT * FROM Tasks WHERE id_task=?";
         List<Task> list = getDaTa(sql,id);
         return list.get(0);
     }
