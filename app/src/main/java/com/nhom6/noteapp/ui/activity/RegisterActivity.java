@@ -31,39 +31,10 @@ public class RegisterActivity extends AppCompatActivity {
         binding.btnRegister.setOnClickListener(view->{
             userDAO = new UserDAO(this);
             userArrayList = userDAO.getAll();
-            username = binding.editTextRegisterUsername.getText().toString();
-            name = binding.editTextRegisterName.getText().toString();
-            password = binding.editTextRegisterPass.getText().toString();
-            repassword = binding.editTextRegisterRepass.getText().toString();
-            //Kiểm tra mật khẩu
-            String password_regex =
-                    "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
-            Pattern pattern = Pattern.compile(password_regex);
-            Matcher matcher = pattern.matcher(password);
-            if(username.isEmpty()){
-                binding.editTextRegisterUsername.setError("Username cannot be blank");
-            }else if (password.isEmpty()){
-                binding.editTextRegisterPass.setError("Password cannot be blank");
-            }else if (repassword.isEmpty()){
-                binding.editTextRegisterRepass.setError("Comfirm password cannot be blank");
-            } else if (name.isEmpty()) {
-                binding.editTextRegisterName.setError("Name cannot be blank");
-            } else if (!password.equals(repassword)) {
-                binding.editTextRegisterRepass.setError("Confirmation password does not match");
-
-            } else if (!matcher.matches()) {
-                showDialog("Your password is too weak");
-            } else if (!checkNewUserName()) {
-                showDialog("Username available");
-            } else {
-                String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-                User user = new User(name, username, hashedPassword);
-                try {
-                    userDAO.insert(user);
-                    showDialog("Registration successful, please log in to use the service");
-                    finish();
-                } catch (Exception e1) {
-                    showDialog("Registration failed, there was an error connecting to the database");
+            getBinding();
+            if(checkEditText()){
+                if(checkLogic()){
+                    register();
                 }
             }
         });
@@ -72,7 +43,12 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-
+    private void getBinding(){
+        username = binding.editTextRegisterUsername.getText().toString();
+        name = binding.editTextRegisterName.getText().toString();
+        password = binding.editTextRegisterPass.getText().toString();
+        repassword = binding.editTextRegisterRepass.getText().toString();
+    }
     private boolean checkNewUserName(){
         for (User item:userArrayList) {
             if(username.equals(item.getUserName()))
@@ -81,11 +57,62 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
+    private boolean checkEditText(){
+        boolean allsuccess = true;
+        if(username.isEmpty()){
+            binding.editTextRegisterUsername.setError("Username cannot be blank");
+            allsuccess = false;
+        }
+        if (password.isEmpty()){
+            binding.editTextRegisterPass.setError("Password cannot be blank");
+            allsuccess = false;
+        }
+        if (repassword.isEmpty()){
+            binding.editTextRegisterRepass.setError("Comfirm password cannot be blank");
+            allsuccess = false;
+        }
+        if (name.isEmpty()) {
+            binding.editTextRegisterName.setError("Name cannot be blank");
+            allsuccess = false;
+        }
+        if (!password.equals(repassword)) {
+            binding.editTextRegisterRepass.setError("Confirmation password does not match");
+            allsuccess = false;
+        }
+        return allsuccess;
+    }
+
+    private boolean checkLogic(){
+        String password_regex =
+                "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
+        Pattern pattern = Pattern.compile(password_regex);
+        Matcher matcher = pattern.matcher(password);
+        if (!matcher.matches()) {
+            showDialog("Your password is too weak");
+            return false;
+        } else if (!checkNewUserName()) {
+            showDialog("Username available");
+            return false;
+        } else {
+            return true;
+        }
+    }
+    private void register(){
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        User user = new User(name, username, hashedPassword);
+        try {
+            userDAO.insert(user);
+            showDialog("Registration successful, please log in to use the service");
+        } catch (Exception e1) {
+            showDialog("Registration failed, there was an error connecting to the database");
+        }
+    }
     private void showDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
                 .setPositiveButton("Close", (dialog, id) -> {
                     dialog.dismiss();
+                    finish();
                 });
         AlertDialog dialog = builder.create();
         dialog.show();

@@ -52,13 +52,9 @@ public class UserDAO {
         return list.get(0);
     }
 
-    public User getUserByUsername(String username){
+    public ArrayList<User> getUserByUsername(String username){
         String sql = "SELECT * FROM Users WHERE username_user=?";
-        List<User> list = getData(sql,username);
-        if(list.size()!= 0)
-            return list.get(0);
-        else
-            return new User(-1,"","","");
+        return (ArrayList<User>) getData(sql,username);
     }
     @SuppressLint("Range")
     private List<User> getData(String sql, String...selectionArgs) {

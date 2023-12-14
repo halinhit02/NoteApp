@@ -14,12 +14,13 @@ import com.nhom6.noteapp.model.DTO.User;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.ArrayList;
+
 public class LoginActivity extends AppCompatActivity {
     private UserDAO userDAO;
-
-
+    private User user;
     private ActivityLoginBinding binding;
-
+    String userName, password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,15 +29,11 @@ public class LoginActivity extends AppCompatActivity {
 
         userDAO = new UserDAO(this);
         binding.btnLogin.setOnClickListener(view -> {
-            String userName = binding.editTextUsername.getText().toString().trim();
-            String password = binding.editTextPassword.getText().toString().trim();
+            userName = binding.editTextUsername.getText().toString().trim();
+            password = binding.editTextPassword.getText().toString().trim();
 
-            if (checkLogin(userName, password, userDAO.getUserByUsername(userName))) {
-                User user = userDAO.getUserByUsername(userName);
-                String name = user.getName();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.putExtra("Name", name);
-                startActivity(intent);
+            if (checkLogin(userName, password)) {
+                LoginSuccess();
             }
         });
         binding.tvMoveRegister.setOnClickListener(view -> {
@@ -44,29 +41,44 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent1);
         });
     }
-
-    private boolean checkLogin(String userName, String password, User user) {
-
+    private boolean checkBlank(){
+        boolean allSuccess = true;
         if (userName.isEmpty()) {
-            binding.editTextUsername.setError("Username  cannot be blank");
-            return false;
+            binding.editTextUsername.setError("Username cannot be blank");
+            allSuccess = false;
         }
         if (password.isEmpty()) {
-            binding.editTextUsername.setError("Password  cannot be blank");
-            return false;
-        } else if (user == null) {
-            showDialog("Username does not exist");
-            return false;
+            binding.editTextPassword.setError("Password cannot be blank");
+            allSuccess = false;
         }
-        // check != rỗng và sai password
-        else {
-            if (user.getPassword().isEmpty() || !BCrypt.checkpw(password, user.getPassword())) {
-                showDialog("Wrong password or User");
+        return allSuccess;
+    }
+    private boolean checkLogin(String userName, String password) {
+        if(checkBlank()){
+            ArrayList<User> users = userDAO.getUserByUsername(userName);
+            //check khác rỗng
+            if(users.size() == 0) {
+                showDialog("Username is not available");
                 return false;
-            } else {
-                return true;
+            }else {
+                //check pass
+                user = users.get(0);
+                if (!BCrypt.checkpw(password, user.getPassword())) {
+                    showDialog("Wrong password or username");
+                    return false;
+                } else {
+                    return true;
+                }
             }
         }
+        return false;
+    }
+
+    private void LoginSuccess(){
+        String name = user.getName();
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("Name", name);
+        startActivity(intent);
     }
 
     private void showDialog(String message) {
