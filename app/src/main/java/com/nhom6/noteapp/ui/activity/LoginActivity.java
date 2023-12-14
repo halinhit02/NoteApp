@@ -18,7 +18,8 @@ public class LoginActivity extends AppCompatActivity {
     private UserDAO userDAO;
 
 
-    private ActivityLoginBinding binding ;
+    private ActivityLoginBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +27,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         userDAO = new UserDAO(this);
-        binding.btnLogin.setOnClickListener(view->{
+        binding.btnLogin.setOnClickListener(view -> {
             String userName = binding.editTextUsername.getText().toString().trim();
             String password = binding.editTextPassword.getText().toString().trim();
 
-            if (checkLogin(userName,password,userDAO.getUserByUsername(userName))){
+            if (checkLogin(userName, password, userDAO.getUserByUsername(userName))) {
                 User user = userDAO.getUserByUsername(userName);
                 String name = user.getName();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -38,31 +39,32 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        binding.tvMoveRegister.setOnClickListener(view->{
+        binding.tvMoveRegister.setOnClickListener(view -> {
             Intent intent1 = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent1);
         });
     }
 
-    private boolean checkLogin(String userName,String password,User user){
+    private boolean checkLogin(String userName, String password, User user) {
 
-        if(userName.isEmpty()){
+        if (userName.isEmpty()) {
             binding.editTextUsername.setError("Username  cannot be blank");
             return false;
-        } if( password.isEmpty()){
+        }
+        if (password.isEmpty()) {
             binding.editTextUsername.setError("Password  cannot be blank");
             return false;
-        }
-        else if (user==null) {
+        } else if (user == null) {
             showDialog("Username does not exist");
             return false;
-        } else {
-            boolean isPasswordCorrect = BCrypt.checkpw(password, user.getPassword());
-            if (!isPasswordCorrect) {
-                showDialog("Wrong password");
+        }
+        // check != rỗng và sai password
+        else {
+            if (user.getPassword().isEmpty() || !BCrypt.checkpw(password, user.getPassword())) {
+                showDialog("Wrong password or User");
                 return false;
             } else {
-               return true;
+                return true;
             }
         }
     }
