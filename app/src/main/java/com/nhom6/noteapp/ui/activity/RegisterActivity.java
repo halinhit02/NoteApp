@@ -102,12 +102,22 @@ public class RegisterActivity extends AppCompatActivity {
         User user = new User(name, username, hashedPassword);
         try {
             userDAO.insert(user);
-            showDialog("Registration successful, please log in to use the service");
+            showDialog2("Registration successful, please log in to use the service");
         } catch (Exception e1) {
-            showDialog("Registration failed, there was an error connecting to the database");
+            showDialog2("Registration failed, there was an error connecting to the database");
         }
     }
     private void showDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setPositiveButton("Close", (dialog, id) -> {
+                    dialog.dismiss();
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showDialog2(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
                 .setPositiveButton("Close", (dialog, id) -> {
@@ -117,5 +127,4 @@ public class RegisterActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
 }
