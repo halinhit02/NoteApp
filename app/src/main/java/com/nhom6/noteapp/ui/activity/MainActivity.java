@@ -5,15 +5,13 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.ActivityMainBinding;
 import com.nhom6.noteapp.ui.fragment.CategoryFragment;
-import com.nhom6.noteapp.model.DAO.CategoryDAO;
-import com.nhom6.noteapp.model.DAO.TaskDAO;
-import com.nhom6.noteapp.model.DAO.UserDAO;
+import com.nhom6.noteapp.model.dao.CategoryDAO;
+import com.nhom6.noteapp.model.dao.TaskDAO;
+import com.nhom6.noteapp.model.dao.UserDAO;
 
 public class MainActivity extends AppCompatActivity {
     private UserDAO userDAO;
@@ -33,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment, fragment);
-        fragmentTransaction.commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, fragment)
+                .commit();
     }
 
 }

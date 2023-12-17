@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,23 +21,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.nhom6.noteapp.Constance;
 import com.nhom6.noteapp.R;
-import com.nhom6.noteapp.adapter.TaskAdapter;
 import com.nhom6.noteapp.databinding.DialogAddTaskBinding;
 import com.nhom6.noteapp.databinding.FragmentTaskBinding;
-import com.nhom6.noteapp.model.DAO.TaskDAO;
-import com.nhom6.noteapp.model.DTO.Category;
-import com.nhom6.noteapp.model.DTO.Task;
+import com.nhom6.noteapp.extension.Format;
+import com.nhom6.noteapp.model.dao.TaskDAO;
+import com.nhom6.noteapp.model.dto.Category;
+import com.nhom6.noteapp.model.dto.Task;
+import com.nhom6.noteapp.ui.adapter.TaskAdapter;
+import com.nhom6.noteapp.ui.dialog.DialogTaskEnd;
 import com.nhom6.noteapp.ui.viewmodel.SharedViewModel;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -51,6 +51,7 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
     private SharedViewModel sharedViewModel;
 
     Category category;
+    DialogTaskEnd dialogTaskEnd;
 
     public TaskFragment() {
         // Required empty public constructor
@@ -66,6 +67,7 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dialogTaskEnd = new DialogTaskEnd();
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getNameData().observe(this, nameObserver);
 
@@ -94,15 +96,15 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
     private ArrayList<Task> listTask;
     private TaskAdapter taskAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private  int id_category;
+    private int id_category;
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)  {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         taskDAO = new TaskDAO(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext());
         listTask = taskDAO.getAll(String.valueOf(category.getId()));
-        taskAdapter = new TaskAdapter(listTask, getContext(),this);
+        taskAdapter = new TaskAdapter(listTask, getContext(), this);
         id_category = category.getId();
         binding.rcvTasks.setLayoutManager(linearLayoutManager);
         binding.rcvTasks.setAdapter(taskAdapter);
@@ -164,49 +166,41 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                 dialog1.show();
             });
 
-            bindingDialog.imgCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.cancel();
-                }
-            });
+            bindingDialog.imgCancel.setOnClickListener(v12 -> dialog.cancel());
 
-            bindingDialog.btnAddTask.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (bindingDialog.tvTime.getText().toString().trim().isEmpty()) {
-                        bindingDialog.tvTime.setError("Select time to limit");
-                    }
-                    if (bindingDialog.tvDate.getText().toString().trim().isEmpty()) {
-                        bindingDialog.tvDate.setError("select the date to limit");
-                    }
-                    if (bindingDialog.edtTask.getText().toString().trim().isEmpty()) {
-                        bindingDialog.edtTask.setError("You have not entered a task yet");
-                    }
-                    if (bindingDialog.edtDesTask.getText().toString().trim().isEmpty()) {
-                        bindingDialog.edtDesTask.setError("You have not entered a description yet");
+            bindingDialog.btnAddTask.setOnClickListener(v13 -> {
+                if (bindingDialog.tvTime.getText().toString().trim().isEmpty()) {
+                    bindingDialog.tvTime.setError("Select time to limit");
+                }
+                if (bindingDialog.tvDate.getText().toString().trim().isEmpty()) {
+                    bindingDialog.tvDate.setError("select the date to limit");
+                }
+                if (bindingDialog.edtTask.getText().toString().trim().isEmpty()) {
+                    bindingDialog.edtTask.setError("You have not entered a task yet");
+                }
+                if (bindingDialog.edtDesTask.getText().toString().trim().isEmpty()) {
+                    bindingDialog.edtDesTask.setError("You have not entered a description yet");
+                } else {
+                    Task task = new Task();
+                    task.setTitle(bindingDialog.edtTask.getText().toString().trim());
+                    task.setDate(bindingDialog.tvDate.getText().toString().trim());
+                    task.setTime(bindingDialog.tvTime.getText().toString().trim());
+                    task.setDes(bindingDialog.edtDesTask.getText().toString().trim());
+                    task.setScore("0/10");
+                    task.setNote("");
+                    task.setId_category(id_category);
+                    task.setDone(0);
+                    Toast.makeText(getActivity(), task.getId_category() + "", Toast.LENGTH_SHORT).show();
+                    long res = taskDAO.insert(task);
+                    if (res > 0) {
+                        Toast.makeText(getContext(), "Added task successfully", Toast.LENGTH_SHORT).show();
+                        listTask.clear();
+                        listTask.addAll(taskDAO.getAll(String.valueOf(category.getId())));
+                        taskAdapter.notifyDataSetChanged();
                     } else {
-                        Task task = new Task();
-                        task.setTitle(bindingDialog.edtTask.getText().toString().trim());
-                        task.setDate(bindingDialog.tvDate.getText().toString().trim());
-                        task.setTime(bindingDialog.tvTime.getText().toString().trim());
-                        task.setDes(bindingDialog.edtDesTask.getText().toString().trim());
-                        task.setScore("0/10");
-                        task.setNote("");
-                        task.setId_category(id_category);
-                        task.setDone(0);
-                        Toast.makeText(getActivity(), task.getId_category()+ "", Toast.LENGTH_SHORT).show();
-                        long res = taskDAO.insert(task);
-                        if (res > 0) {
-                            Toast.makeText(getContext(), "Added task successfully", Toast.LENGTH_SHORT).show();
-                            listTask.clear();
-                            listTask.addAll(taskDAO.getAll(String.valueOf(category.getId())));
-                            taskAdapter.notifyDataSetChanged();
-                        } else {
-                            Toast.makeText(getContext(), "Add failure task", Toast.LENGTH_SHORT).show();
-                        }
-                        dialog.dismiss();
+                        Toast.makeText(getContext(), "Add failure task", Toast.LENGTH_SHORT).show();
                     }
+                    dialog.dismiss();
                 }
             });
 
@@ -215,47 +209,56 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
         });
 
         binding.imgBack.setOnClickListener(v -> {
-            replaceFragment(new CategoryFragment());
+            requireActivity()
+                    .getSupportFragmentManager()
+                    .popBackStack();
         });
 
     }
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment, fragment);
-        fragmentTransaction.commit();
+    private void replaceFragment(Fragment fragment, Bundle data) {
+        fragment.setArguments(data);
+        requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.fragment, fragment)
+                .commit();
+    }
+
+    @Override
+    public void onLongClick(Task item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Are you sure you want to delete ?");
+        builder.setPositiveButton("OK", (dialogInterface, i) -> {
+            int check = taskDAO.delete(item.getId());
+            switch (check) {
+                case 1:
+                    listTask.clear();
+                    listTask.addAll(taskDAO.getAll(String.valueOf(id_category)));
+                    taskAdapter.notifyDataSetChanged();
+                    Toast.makeText(getActivity(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                    break;
+                case 0:
+                    Toast.makeText(getActivity(), "Delete failed", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+        });
+        builder.setNegativeButton("Cancle", (dialogInterface, i) -> dialogInterface.cancel());
+        builder.show();
     }
 
     @Override
     public void onClick(Task item) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Are you sure you want to delete ?");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                int check = taskDAO.delete(item.getId());
-                switch (check) {
-                    case 1:
-                        listTask.clear();
-                        listTask.addAll(taskDAO.getAll(String.valueOf(id_category)));
-                        taskAdapter.notifyDataSetChanged();
-                        Toast.makeText(getActivity(), "Deleted successfully", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 0:
-                        Toast.makeText(getActivity(), "Delete failed", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        builder.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-        builder.show();
+        Bundle data = new Bundle();
+        data.putSerializable(Constance.KEY_TASK,item);
+        if(Format.formatDateTimeToDate(item.getTime(),item.getDate()).isAfter(LocalDateTime.now()) && item.getDone() == 0) {
+            replaceFragment(new TaskDetailFragment(),data);
+        }
+        else {
+            dialogTaskEnd.show(requireActivity().getSupportFragmentManager(),getClass().getName(),item);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.model.DTO;
+package com.nhom6.noteapp.model.dto;
 
 import java.io.Serializable;
 

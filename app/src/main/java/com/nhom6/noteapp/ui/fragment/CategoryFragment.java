@@ -23,11 +23,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.nhom6.noteapp.Constance;
 import com.nhom6.noteapp.R;
-import com.nhom6.noteapp.adapter.Categoryadpter;
+import com.nhom6.noteapp.ui.adapter.Categoryadpter;
 import com.nhom6.noteapp.databinding.DialogAddCategoryBinding;
 import com.nhom6.noteapp.databinding.FragmentCategoryBinding;
-import com.nhom6.noteapp.model.DAO.CategoryDAO;
-import com.nhom6.noteapp.model.DTO.Category;
+import com.nhom6.noteapp.model.dao.CategoryDAO;
+import com.nhom6.noteapp.model.dto.Category;
 import com.nhom6.noteapp.ui.viewmodel.SharedViewModel;
 
 import java.text.SimpleDateFormat;
@@ -170,12 +170,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
             btnCancel = dialog.findViewById(R.id.btnCancelSignout);
             btnOke = dialog.findViewById(R.id.btnOke);
 
-            btnOke.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().finish();
-                }
-            });
+            btnOke.setOnClickListener(v12 -> getActivity().finish());
 
             btnCancel.setOnClickListener(v1 -> {
                 dialog.cancel();
@@ -206,6 +201,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
         requireActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
+                .addToBackStack(null)
                 .replace(R.id.fragment, fragment)
                 .commit();
     }

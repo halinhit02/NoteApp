@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -63,36 +64,38 @@
 
         <TextView
             android:id="@+id/name_task"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Làm slide"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_name1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_name1"
+            app:layout_constraintEnd_toEndOf="@+id/time_task"
+            app:layout_constraintStart_toStartOf="@+id/time_task"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/time_task"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:text="10h 21 21/10/2023"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_name2"
-            app:layout_constraintStart_toStartOf="@+id/name_task"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/des_task"
             app:layout_constraintTop_toTopOf="@+id/tv_name2" />
 
         <TextView
             android:id="@+id/des_task"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
             android:text="Làm slide\n jádkádjjalksdjaklsdjkádjkádaks\nkádaksdla"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/time_task"
-            app:layout_constraintTop_toBottomOf="@+id/time_task" />
+            app:layout_constraintStart_toEndOf="@+id/tv_name1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name2" />
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_score"
@@ -105,12 +108,12 @@
         <EditText
             android:id="@+id/note_task"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
             android:background="@color/white"
-            android:text="10h 21 21/10/2023\naksđálkádjkládjkalsdj\nkalsjdlkádja\nádkádkád"
+            android:hint="Nhập vào ghi chú..."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_name5"
             app:layout_constraintTop_toBottomOf="@+id/tv_name5" />
@@ -142,19 +145,21 @@
             android:id="@+id/tv_name3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="Mô tả"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/des_task"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_name2"
             app:layout_constraintTop_toTopOf="@+id/des_task" />
+
 
         <TextView
             android:id="@+id/tv_name4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:text="Tự chấm điểm"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -193,3 +198,4 @@
         app:layout_constraintStart_toStartOf="@+id/constraintLayout"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

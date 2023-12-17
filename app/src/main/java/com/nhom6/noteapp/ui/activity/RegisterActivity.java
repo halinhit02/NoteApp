@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil;
 
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.ActivityRegisterBinding;
-import com.nhom6.noteapp.model.DAO.UserDAO;
-import com.nhom6.noteapp.model.DTO.User;
+import com.nhom6.noteapp.model.dao.UserDAO;
+import com.nhom6.noteapp.model.dto.User;
 
 import org.mindrot.jbcrypt.BCrypt;
 

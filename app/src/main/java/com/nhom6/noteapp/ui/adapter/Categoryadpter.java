@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.adapter;
+package com.nhom6.noteapp.ui.adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,12 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nhom6.noteapp.R;
-import com.nhom6.noteapp.model.DAO.CategoryDAO;
-import com.nhom6.noteapp.model.DTO.Category;
+import com.nhom6.noteapp.model.dao.CategoryDAO;
+import com.nhom6.noteapp.model.dto.Category;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.model.DAO;
+package com.nhom6.noteapp.model.dao;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.nhom6.noteapp.model.DbHelper;
-import com.nhom6.noteapp.model.DTO.Category;
+import com.nhom6.noteapp.model.dto.Category;
 
 import java.util.ArrayList;
 import java.util.List;

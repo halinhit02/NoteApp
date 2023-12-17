@@ -1,4 +1,4 @@
-package com.nhom6.noteapp.model.DAO;
+package com.nhom6.noteapp.model.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.nhom6.noteapp.model.DbHelper;
-import com.nhom6.noteapp.model.DTO.Task;
+import com.nhom6.noteapp.model.dto.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +23,9 @@ public class TaskDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put("title_task",task.getTitle());
         contentValues.put("des_task",task.getDes());
-        contentValues.put("note_task",task.getDes());
+        contentValues.put("note_task",task.getNote());
         contentValues.put("time_task",task.getTime());
-        contentValues.put("date_task",task.getTime());
+        contentValues.put("date_task",task.getDate());
         contentValues.put("done_task",task.getDone());
         contentValues.put("score_task",task.getScore());
         contentValues.put("id_category",task.getId_category());
@@ -37,9 +37,9 @@ public class TaskDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put("title_task",task.getTitle());
         contentValues.put("des_task",task.getDes());
-        contentValues.put("note_task",task.getDes());
+        contentValues.put("note_task",task.getNote());
         contentValues.put("time_task",task.getTime());
-        contentValues.put("date_task",task.getTime());
+        contentValues.put("date_task",task.getDate());
         contentValues.put("done_task",task.getDone());
         contentValues.put("score_task",task.getScore());
         contentValues.put("id_category",task.getId_category());

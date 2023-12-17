@@ -1,12 +1,9 @@
-package com.nhom6.noteapp.adapter;
+package com.nhom6.noteapp.ui.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -14,9 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.ItemTaskBinding;
-import com.nhom6.noteapp.model.DAO.TaskDAO;
-import com.nhom6.noteapp.model.DTO.Category;
-import com.nhom6.noteapp.model.DTO.Task;
+import com.nhom6.noteapp.model.dao.TaskDAO;
+import com.nhom6.noteapp.model.dto.Task;
 
 import java.util.ArrayList;
 
@@ -46,8 +42,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
     public void onBindViewHolder(@NonNull TaskViewholder holder, int position) {
         holder.bind(listData.get(position));
         holder.itemView.setOnLongClickListener (v-> {
-            taskClick.onClick(listData.get(position));
+            taskClick.onLongClick(listData.get(position));
             return false;
+        });
+        holder.itemView.setOnClickListener( v-> {
+            taskClick.onClick(listData.get(position));
         });
     }
 
@@ -57,7 +56,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
     }
 
     public  class TaskViewholder extends RecyclerView.ViewHolder  implements View.OnClickListener {
-
 
         private ItemTaskBinding binding ;
         public TaskViewholder(@NonNull ItemTaskBinding binding) {
@@ -81,6 +79,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
     }
 
     public interface TaskClick {
+        void onLongClick(Task item);
         void onClick(Task item);
     }
 
