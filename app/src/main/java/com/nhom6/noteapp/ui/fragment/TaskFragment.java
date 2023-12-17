@@ -42,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 
 public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
@@ -132,12 +133,21 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
 
                     int mHour = calendar.get(Calendar.HOUR_OF_DAY);
                     int mMinute = calendar.get(Calendar.MINUTE);
-                    TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                            bindingDialog.tvTime.setText(hourOfDay + ":" + minute);
-                        }
-                    }, mHour, mMinute, false);
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(
+                            getContext(),
+                            new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                    // Xử lý giờ và phút ở đây
+                                    String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
+                                    bindingDialog.tvTime.setText(formattedTime);
+                                }
+                            },
+                            calendar.get(Calendar.HOUR_OF_DAY), // Giờ hiện tại
+                            calendar.get(Calendar.MINUTE),      // Phút hiện tại
+                            true                                // 24-hour format
+                    );
+
                     timePickerDialog.show();
                 }
             });
@@ -146,10 +156,8 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                 DatePickerDialog dialog1 = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        int myear = year;
-                        int mmonth = month;
-                        int mdayOfMonth = dayOfMonth;
-                        GregorianCalendar c = new GregorianCalendar(myear, mmonth, mdayOfMonth);
+
+                        GregorianCalendar c = new GregorianCalendar(year, month, dayOfMonth);
                         bindingDialog.tvDate.setText(sdf.format(c.getTime()));
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
