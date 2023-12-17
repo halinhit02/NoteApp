@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import com.nhom6.noteapp.Constance;
+import com.nhom6.noteapp.extension.Constance;
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.FragmentTaskDetailDoingBinding;
 import com.nhom6.noteapp.extension.Format;

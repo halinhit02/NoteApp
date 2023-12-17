@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.ActivityLoginBinding;
+import com.nhom6.noteapp.extension.Constance;
 import com.nhom6.noteapp.model.dao.UserDAO;
 import com.nhom6.noteapp.model.dto.User;
 
@@ -75,9 +76,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void LoginSuccess(){
-        String name = user.getName();
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra("Name", name);
+        intent.putExtra(Constance.KEY_USER, user);
         startActivity(intent);
         finish();
     }

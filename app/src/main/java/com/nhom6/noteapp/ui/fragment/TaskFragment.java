@@ -25,7 +25,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.nhom6.noteapp.Constance;
+import com.nhom6.noteapp.extension.Constance;
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.DialogAddTaskBinding;
 import com.nhom6.noteapp.databinding.FragmentTaskBinding;

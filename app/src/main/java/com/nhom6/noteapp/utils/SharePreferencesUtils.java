@@ -3,7 +3,7 @@ package com.nhom6.noteapp.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.nhom6.noteapp.Constance;
+import com.nhom6.noteapp.extension.Constance;
 
 public class SharePreferencesUtils {
     private static SharedPreferences mSharePref;

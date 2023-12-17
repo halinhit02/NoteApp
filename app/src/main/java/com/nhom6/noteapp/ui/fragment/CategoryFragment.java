@@ -21,8 +21,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.nhom6.noteapp.Constance;
+import com.nhom6.noteapp.extension.Constance;
 import com.nhom6.noteapp.R;
+import com.nhom6.noteapp.model.dto.User;
 import com.nhom6.noteapp.ui.adapter.Categoryadpter;
 import com.nhom6.noteapp.databinding.DialogAddCategoryBinding;
 import com.nhom6.noteapp.databinding.FragmentCategoryBinding;
@@ -38,6 +39,7 @@ import java.util.Locale;
 public class CategoryFragment extends Fragment implements Categoryadpter.CategoryClick{
 
     private FragmentCategoryBinding binding;
+    private User user;
 
 
     public static CategoryFragment newInstance(String param1, String param2) {
@@ -55,7 +57,10 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-
+        Bundle data = getArguments();
+        if(data!= null) {
+            user = (User) data.getSerializable(Constance.KEY_USER);
+        }
     }
 
     @Override
@@ -213,5 +218,4 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
         replaceFragment(new TaskFragment(),data);
 //        sharedViewModel.setNameData(listCategory.get(position).getName());
     }
-
 }
