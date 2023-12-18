@@ -1,5 +1,6 @@
 package com.nhom6.noteapp.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +79,7 @@ public class TaskDetailFragment extends Fragment implements DialogConfirm.OnClic
         });
         binding.btnSuccess.setOnClickListener(v -> {
             if (binding.noteTask.getText().toString().isEmpty()) {
-                Toast.makeText(requireActivity(), "Phải phải chấm điểm và nhập ghi chú để hoàn thành", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireActivity(), requireContext().getString(R.string.toast), Toast.LENGTH_LONG).show();
             } else if (!dialogConfirm.isAdded()
                     && !dialogConfirm.isVisible()
                     && !dialogConfirm.isRemoving()) {
@@ -102,14 +103,14 @@ public class TaskDetailFragment extends Fragment implements DialogConfirm.OnClic
         task.setNote(binding.noteTask.getText().toString());
         taskDAO.update(task);
         dialogConfirm.dismiss();
-        Toast.makeText(requireContext(), "Đã cập nhật công việc", Toast.LENGTH_LONG).show();
+        Toast.makeText(requireContext(), requireContext().getString(R.string.label_da_cap_nhat), Toast.LENGTH_LONG).show();
         requireActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override
     public void onClickUpdateTaskSuccess(LocalDateTime localDateTime) {
         dialogUpdate.dismiss();
-        Toast.makeText(requireContext(), "Đã cập nhật công việc", Toast.LENGTH_LONG).show();
+        Toast.makeText(requireContext(), requireContext().getString(R.string.label_da_cap_nhat), Toast.LENGTH_LONG).show();
         requireActivity().getSupportFragmentManager().popBackStack();
     }
     private void replaceFragment(Fragment fragment) {

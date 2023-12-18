@@ -34,4 +34,17 @@
     <string name="error_username">Username  cannot be blank</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_name_task">Tên công việc</string>
+    <string name="label_not_note">Không có ghi chú</string>
+    <string name="label_note">Ghi chú</string>
+    <string name="label_score">Tự chấm điểm</string>
+    <string name="label_des">Mô tả</string>
+    <string name="label_time_end">Thời hạn</string>
+    <string name="label_success">Hoàn thành</string>
+    <string name="input_note">Nhập vào ghi chú...</string>
+    <string name="label_confirm">Xác nhận hoàn thành công việc này ?</string>
+    <string name="label_oke">Oke</string>
+    <string name="label_cancel">Hủy</string>
+    <string name="toast">\"Phải phải chấm điểm và nhập ghi chú để hoàn thành\"</string>
+    <string name="label_da_cap_nhat">Đã cập nhật công việc</string>
 </resources>
