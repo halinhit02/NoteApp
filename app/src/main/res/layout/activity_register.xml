@@ -20,15 +20,6 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/baseline_arrow_back24"
                 tools:ignore="ContentDescription" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/textview_register"
-                android:textColor="@color/white"
-                android:textSize="40sp"
-                android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
@@ -40,6 +31,47 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/ic_launcher" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/app_name"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:text="@string/sign_up"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:text="@string/signup_des"/>
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/editText_register_name"
@@ -86,8 +118,9 @@
             <Button
                 android:id="@+id/btn_register"
                 android:layout_margin="@dimen/margin_small"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/blue"
                 android:text="@string/button_register" />
         </LinearLayout>

@@ -34,4 +34,8 @@
     <string name="error_username">Username  cannot be blank</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="signin_des">Login to use the application\'s functions.</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="signup_des">create an account to use application</string>
 </resources>
