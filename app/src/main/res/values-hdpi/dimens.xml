@@ -9,4 +9,5 @@
     <dimen name="height_edittext">44dp</dimen>
 
     <dimen name="img_size">36dp</dimen>
+
 </resources>

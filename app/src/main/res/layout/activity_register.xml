@@ -1,34 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/blue">
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
                 android:id="@+id/imgPreview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/baseline_arrow_back24"
-                tools:ignore="ContentDescription" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/textview_register"
-                android:textColor="@color/white"
-                android:textSize="40sp"
-                android:textStyle="bold" />
+                tools:ignore="ContentDescription"
+                app:tint="@color/black" />
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
@@ -41,55 +35,99 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:maxHeight="50dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/app_name"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/sign_up"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:text="@string/signup_des" />
+
+            </LinearLayout>
+
             <EditText
                 android:id="@+id/editText_register_name"
-                android:layout_margin="@dimen/margin_small"
                 android:layout_width="match_parent"
-                android:padding="@dimen/padding_small"
-                android:background="@drawable/custom_edittext"
                 android:layout_height="@dimen/height_edittext"
+                android:layout_margin="@dimen/margin_small"
+                android:background="@drawable/custom_edittext"
                 android:hint="@string/hint_fullname"
+                android:padding="@dimen/padding_small"
                 tools:ignore="Autofill,TextFields" />
 
             <EditText
                 android:id="@+id/editText_register_username"
-                android:layout_margin="@dimen/margin_small"
                 android:layout_width="match_parent"
-                android:padding="@dimen/padding_small"
-                android:background="@drawable/custom_edittext"
                 android:layout_height="@dimen/height_edittext"
-                tools:ignore="Autofill,TextFields"
-                android:hint="@string/hint_username_register" />
+                android:layout_margin="@dimen/margin_small"
+                android:background="@drawable/custom_edittext"
+                android:hint="@string/hint_username_register"
+                android:padding="@dimen/padding_small"
+                tools:ignore="Autofill,TextFields" />
 
             <EditText
                 android:id="@+id/editText_register_pass"
                 android:layout_width="match_parent"
-                android:layout_margin="@dimen/margin_small"
-                android:padding="@dimen/padding_small"
-                android:background="@drawable/custom_edittext"
-                android:inputType="textPassword"
                 android:layout_height="@dimen/height_edittext"
-                tools:ignore="Autofill,TextFields"
-                android:hint="@string/hint_password_register" />
+                android:layout_margin="@dimen/margin_small"
+                android:background="@drawable/custom_edittext"
+                android:hint="@string/hint_password_register"
+                android:inputType="textPassword"
+                android:padding="@dimen/padding_small"
+                tools:ignore="Autofill,TextFields" />
 
             <EditText
                 android:id="@+id/editText_register_repass"
-                android:layout_margin="@dimen/margin_small"
                 android:layout_width="match_parent"
-                tools:ignore="Autofill,TextFields"
-                android:padding="@dimen/padding_small"
-                android:inputType="textPassword"
-                android:background="@drawable/custom_edittext"
                 android:layout_height="@dimen/height_edittext"
-                android:hint="@string/hint_confirmpassword_register" />
+                android:layout_margin="@dimen/margin_small"
+                android:background="@drawable/custom_edittext"
+                android:hint="@string/hint_confirmpassword_register"
+                android:inputType="textPassword"
+                android:padding="@dimen/padding_small"
+                tools:ignore="Autofill,TextFields" />
 
             <Button
                 android:id="@+id/btn_register"
-                android:layout_margin="@dimen/margin_small"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/blue"
-                android:text="@string/button_register" />
+                android:layout_margin="@dimen/margin_small"
+                android:backgroundTint="@color/orange_FB9A09"
+                android:text="@string/button_register"
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,4 +47,8 @@
     <string name="label_cancel">Hủy</string>
     <string name="toast">\"Phải phải chấm điểm và nhập ghi chú để hoàn thành\"</string>
     <string name="label_da_cap_nhat">Đã cập nhật công việc</string>
+    <string name="signin_des">Login to use the application\'s functions.</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="signup_des">create an account to use application</string>
 </resources>
