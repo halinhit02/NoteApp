@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/margin_small"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/orange_FB9A09"
                 android:text="@string/button_login"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
