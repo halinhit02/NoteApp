@@ -20,6 +20,7 @@ import com.nhom6.noteapp.model.dao.TaskDAO;
 import com.nhom6.noteapp.model.dto.Task;
 import com.nhom6.noteapp.ui.dialog.DialogConfirm;
 import com.nhom6.noteapp.ui.dialog.DialogUpdate;
+import com.nhom6.noteapp.utils.NotificationUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class TaskDetailFragment extends Fragment implements DialogConfirm.OnClic
         }
         setUpView();
         onClick();
-        dialogUpdate = new DialogUpdate(requireContext(),this);
+        dialogUpdate = new DialogUpdate(requireContext(), this);
         dialogConfirm = new DialogConfirm(this);
         setUpSpinner();
     }
@@ -89,7 +90,7 @@ public class TaskDetailFragment extends Fragment implements DialogConfirm.OnClic
             if (!dialogUpdate.isAdded()
                     && !dialogUpdate.isVisible()
                     && !dialogUpdate.isRemoving()) {
-                dialogUpdate.show(getChildFragmentManager(), getClass().getName(),task);
+                dialogUpdate.show(getChildFragmentManager(), getClass().getName(), task);
             }
         });
     }
@@ -102,6 +103,7 @@ public class TaskDetailFragment extends Fragment implements DialogConfirm.OnClic
         task.setNote(binding.noteTask.getText().toString());
         taskDAO.update(task);
         dialogConfirm.dismiss();
+        NotificationUtils.showNotification(requireActivity(), "Công việc \"" + task.getTitle() + "\" của bạn đã hoàn thành.");
         Toast.makeText(requireContext(), "Đã cập nhật công việc", Toast.LENGTH_LONG).show();
         requireActivity().getSupportFragmentManager().popBackStack();
     }
@@ -112,6 +114,7 @@ public class TaskDetailFragment extends Fragment implements DialogConfirm.OnClic
         Toast.makeText(requireContext(), "Đã cập nhật công việc", Toast.LENGTH_LONG).show();
         requireActivity().getSupportFragmentManager().popBackStack();
     }
+
     private void replaceFragment(Fragment fragment) {
         fragment.setArguments(null);
         requireActivity()

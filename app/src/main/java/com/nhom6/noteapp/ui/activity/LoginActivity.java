@@ -1,10 +1,15 @@
 package com.nhom6.noteapp.ui.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.nhom6.noteapp.R;
@@ -12,6 +17,8 @@ import com.nhom6.noteapp.databinding.ActivityLoginBinding;
 import com.nhom6.noteapp.extension.Constance;
 import com.nhom6.noteapp.model.dao.UserDAO;
 import com.nhom6.noteapp.model.dto.User;
+import com.nhom6.noteapp.services.NotificationService;
+import com.nhom6.noteapp.utils.SharePreferencesUtils;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -22,18 +29,24 @@ public class LoginActivity extends AppCompatActivity {
     private User user;
     private ActivityLoginBinding binding;
     String userName, password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         setContentView(binding.getRoot());
-
+        SharePreferencesUtils.init(getApplicationContext());
+        if (SharePreferencesUtils.getBoolean("isSignIn", false)) {
+            startService(new Intent(this, NotificationService.class));
+            startActivity(new Intent(this, MainActivity.class));
+        }
         userDAO = new UserDAO(this);
         binding.btnLogin.setOnClickListener(view -> {
             userName = binding.editTextUsername.getText().toString().trim();
             password = binding.editTextPassword.getText().toString().trim();
 
             if (checkLogin(userName, password)) {
+                SharePreferencesUtils.putBoolean("isSignIn", true);
                 LoginSuccess();
             }
         });
@@ -42,7 +55,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent1);
         });
     }
-    private boolean checkBlank(){
+
+    private boolean checkBlank() {
         boolean allSuccess = true;
         if (userName.isEmpty()) {
             binding.editTextUsername.setError("Username cannot be blank");
@@ -54,14 +68,15 @@ public class LoginActivity extends AppCompatActivity {
         }
         return allSuccess;
     }
+
     private boolean checkLogin(String userName, String password) {
-        if(checkBlank()){
+        if (checkBlank()) {
             ArrayList<User> users = userDAO.getUserByUsername(userName);
             //check khác rỗng
-            if(users.size() == 0) {
+            if (users.size() == 0) {
                 showDialog("Username is not available");
                 return false;
-            }else {
+            } else {
                 //check pass
                 user = users.get(0);
                 if (!BCrypt.checkpw(password, user.getPassword())) {
@@ -75,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
 
-    private void LoginSuccess(){
+    private void LoginSuccess() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra(Constance.KEY_USER, user);
         startActivity(intent);

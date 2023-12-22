@@ -1,8 +1,14 @@
 package com.nhom6.noteapp.model;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.nhom6.noteapp.model.dto.Task;
+
+import java.util.ArrayList;
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -37,6 +43,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "time_task TEXT NOT NULL," +
                 "date_task TEXT NOT NULL," +
                 "done_task INTEGER NOT NULL," +
+                "notified_task INTEGER NOT NULL," +
                 "score_task TEXT NOT NULL," +
                 "id_category INTEGER  REFERENCES Categorys(id_category))" ;
         db.execSQL(createTableTask);

@@ -1,8 +1,17 @@
 package com.nhom6.noteapp.ui.fragment;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,6 +25,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,23 +36,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.nhom6.noteapp.extension.Constance;
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.model.dto.User;
+import com.nhom6.noteapp.ui.activity.LoginActivity;
+import com.nhom6.noteapp.ui.activity.MainActivity;
 import com.nhom6.noteapp.ui.adapter.Categoryadpter;
 import com.nhom6.noteapp.databinding.DialogAddCategoryBinding;
 import com.nhom6.noteapp.databinding.FragmentCategoryBinding;
 import com.nhom6.noteapp.model.dao.CategoryDAO;
 import com.nhom6.noteapp.model.dto.Category;
 import com.nhom6.noteapp.ui.viewmodel.SharedViewModel;
+import com.nhom6.noteapp.utils.SharePreferencesUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
-public class CategoryFragment extends Fragment implements Categoryadpter.CategoryClick{
+public class CategoryFragment extends Fragment implements Categoryadpter.CategoryClick {
 
     private FragmentCategoryBinding binding;
     private User user;
-
 
     public static CategoryFragment newInstance(String param1, String param2) {
         CategoryFragment fragment = new CategoryFragment();
@@ -58,7 +73,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
         super.onCreate(savedInstanceState);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         Bundle data = getArguments();
-        if(data!= null) {
+        if (data != null) {
             user = (User) data.getSerializable(Constance.KEY_USER);
         }
     }
@@ -80,12 +95,11 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         linearLayoutManager = new LinearLayoutManager(getContext());
         binding.rcvCategory.setLayoutManager(linearLayoutManager);
         categoryDAO = new CategoryDAO(getContext());
         listCategory = categoryDAO.getAll();
-        categoryadpter = new Categoryadpter(getContext(),listCategory,this);
+        categoryadpter = new Categoryadpter(getContext(), listCategory, this);
 
         binding.searchCategory.clearFocus();
         binding.searchCategory.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -106,16 +120,16 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
         binding.imgAddCategory.setOnClickListener(v -> {
             Dialog dialog = new Dialog(getContext());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            DialogAddCategoryBinding bindingDialog = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout. dialog_add_category, null, false);
+            DialogAddCategoryBinding bindingDialog = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_add_category, null, false);
             dialog.setContentView(bindingDialog.getRoot());
             Window window = dialog.getWindow();
-            if(window==null){
+            if (window == null) {
                 return;
             }
-            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams windowacc = window.getAttributes();
-            windowacc.gravity = Gravity.NO_GRAVITY ;
+            windowacc.gravity = Gravity.NO_GRAVITY;
             window.setAttributes(windowacc);
 
 
@@ -124,23 +138,24 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
             bindingDialog.btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (bindingDialog.edtTitleCategory.getText().toString().trim().isEmpty()){
+                    if (bindingDialog.edtTitleCategory.getText().toString().trim().isEmpty()) {
                         bindingDialog.edtTitleCategory.setError("Can not leave the title blank");
-                    }if (bindingDialog.edtDesCategory.getText().toString().trim().isEmpty()){
+                    }
+                    if (bindingDialog.edtDesCategory.getText().toString().trim().isEmpty()) {
                         bindingDialog.edtDesCategory.setError("Can not leave the description blank");
-                    }else {
+                    } else {
                         Category category1 = new Category();
                         category1.setName(bindingDialog.edtTitleCategory.getText().toString().trim());
                         category1.setDate(currentDateandTime);
                         category1.setDes(bindingDialog.edtDesCategory.getText().toString().trim());
                         long res = categoryDAO.insert(category1);
-                        if (res>0){
-                            Toast.makeText(getContext(),"Added category successfully",Toast.LENGTH_SHORT).show();
+                        if (res > 0) {
+                            Toast.makeText(getContext(), "Added category successfully", Toast.LENGTH_SHORT).show();
                             listCategory.clear();
                             listCategory.addAll(categoryDAO.getAll());
                             categoryadpter.notifyDataSetChanged();
-                        }else {
-                            Toast.makeText(getContext(),"Add failure category",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Add failure category", Toast.LENGTH_SHORT).show();
                         }
                         dialog.dismiss();
                     }
@@ -154,28 +169,29 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
         });
 
 
-
         binding.imgLogout.setOnClickListener(v -> {
 
             Dialog dialog = new Dialog(getContext());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.dialog_signout);
             Window window = dialog.getWindow();
-            if(window==null){
+            if (window == null) {
                 return;
             }
-            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams windowacc = window.getAttributes();
-            windowacc.gravity = Gravity.NO_GRAVITY ;
+            windowacc.gravity = Gravity.NO_GRAVITY;
             window.setAttributes(windowacc);
 
 
-            Button btnCancel,btnOke;
+            Button btnCancel, btnOke;
             btnCancel = dialog.findViewById(R.id.btnCancelSignout);
             btnOke = dialog.findViewById(R.id.btnOke);
-
-            btnOke.setOnClickListener(v12 -> getActivity().finish());
+            btnOke.setOnClickListener(v12 -> {
+                SharePreferencesUtils.putBoolean("isSignIn", false);
+                getActivity().finish();
+            });
 
             btnCancel.setOnClickListener(v1 -> {
                 dialog.cancel();
@@ -186,22 +202,22 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
     }
 
     private void FinterList(String text) {
-        ArrayList<Category> filteredList=new ArrayList<>();
+        ArrayList<Category> filteredList = new ArrayList<>();
 
-        for (Category category1: listCategory){
-            if (category1.getName().toLowerCase().contains(text.toLowerCase())){
+        for (Category category1 : listCategory) {
+            if (category1.getName().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(category1);
             }
 
         }
-        if (filteredList.isEmpty()){
+        if (filteredList.isEmpty()) {
             Toast.makeText(this.getContext(), "no data", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             categoryadpter.setFilteredList(filteredList);
         }
     }
 
-    private  void replaceFragment(Fragment fragment, Bundle data) {
+    private void replaceFragment(Fragment fragment, Bundle data) {
         fragment.setArguments(data);
         requireActivity()
                 .getSupportFragmentManager()
@@ -214,8 +230,8 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
     @Override
     public void onClick(Category item) {
         Bundle data = new Bundle();
-        data.putSerializable(Constance.KEY_CATEGORY,item);
-        replaceFragment(new TaskFragment(),data);
+        data.putSerializable(Constance.KEY_CATEGORY, item);
+        replaceFragment(new TaskFragment(), data);
 //        sharedViewModel.setNameData(listCategory.get(position).getName());
     }
 }

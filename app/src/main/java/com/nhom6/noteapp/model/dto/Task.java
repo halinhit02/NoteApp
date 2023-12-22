@@ -10,6 +10,7 @@ public class Task implements Serializable {
     private String time;
     private String date;
     private int done;
+    private int notified;
     private String score;
     private int id_category;
 
@@ -23,6 +24,7 @@ public class Task implements Serializable {
         this.time = time;
         this.done = done;
         this.score = score;
+        this.notified = 0;
     }
 
     public Task(int id, String title, String des, String note, String time, String date, int done, String score, int id_category) {
@@ -35,6 +37,15 @@ public class Task implements Serializable {
         this.done = done;
         this.score = score;
         this.id_category = id_category;
+        this.notified = 0;
+    }
+
+    public int getNotified() {
+        return notified;
+    }
+
+    public void setNotified(int notified) {
+        this.notified = notified;
     }
 
     public int getId_category() {

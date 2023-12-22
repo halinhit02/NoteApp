@@ -103,7 +103,7 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
         super.onViewCreated(view, savedInstanceState);
         taskDAO = new TaskDAO(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext());
-        listTask = taskDAO.getAll(String.valueOf(category.getId()));
+        listTask = taskDAO.getAllByCategory(String.valueOf(category.getId()));
         taskAdapter = new TaskAdapter(listTask, getContext(), this);
         id_category = category.getId();
         binding.rcvTasks.setLayoutManager(linearLayoutManager);
@@ -126,7 +126,7 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
             window.setAttributes(windowacc);
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
 
             bindingDialog.tvTime.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -195,7 +195,7 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                     if (res > 0) {
                         Toast.makeText(getContext(), "Added task successfully", Toast.LENGTH_SHORT).show();
                         listTask.clear();
-                        listTask.addAll(taskDAO.getAll(String.valueOf(category.getId())));
+                        listTask.addAll(taskDAO.getAllByCategory(String.valueOf(category.getId())));
                         taskAdapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(getContext(), "Add failure task", Toast.LENGTH_SHORT).show();
@@ -235,7 +235,7 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
             switch (check) {
                 case 1:
                     listTask.clear();
-                    listTask.addAll(taskDAO.getAll(String.valueOf(id_category)));
+                    listTask.addAll(taskDAO.getAllByCategory(String.valueOf(id_category)));
                     taskAdapter.notifyDataSetChanged();
                     Toast.makeText(getActivity(), "Deleted successfully", Toast.LENGTH_SHORT).show();
                     break;
