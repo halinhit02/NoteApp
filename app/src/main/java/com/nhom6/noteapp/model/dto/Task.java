@@ -27,7 +27,7 @@ public class Task implements Serializable {
         this.notified = 0;
     }
 
-    public Task(int id, String title, String des, String note, String time, String date, int done, String score, int id_category) {
+    public Task(int id, String title, String des, String note, String time, String date, int done, int notified, String score, int id_category) {
         this.id = id;
         this.title = title;
         this.des = des;
@@ -37,7 +37,7 @@ public class Task implements Serializable {
         this.done = done;
         this.score = score;
         this.id_category = id_category;
-        this.notified = 0;
+        this.notified = notified;
     }
 
     public int getNotified() {

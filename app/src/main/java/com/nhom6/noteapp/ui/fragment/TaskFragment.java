@@ -190,6 +190,7 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                     task.setNote("");
                     task.setId_category(id_category);
                     task.setDone(0);
+                    task.setNotified(0);
                     Toast.makeText(getActivity(), task.getId_category() + "", Toast.LENGTH_SHORT).show();
                     long res = taskDAO.insert(task);
                     if (res > 0) {

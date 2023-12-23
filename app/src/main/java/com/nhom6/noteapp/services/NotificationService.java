@@ -60,7 +60,7 @@ public class NotificationService extends Service {
             while (true) {
                 try {
                     ArrayList<Task> taskList = taskDAO.getAll();
-                    taskList.forEach((task) -> {
+                    taskList.stream().filter((task -> task.getNotified() != 1)).forEach((task) -> {
                         String[] timeStr = task.getTime().split(":");
                         LocalTime localTime = LocalTime.of(Integer.parseInt(timeStr[0]), Integer.parseInt(timeStr[1]));
                         String[] date = task.getDate().split("/");
@@ -68,14 +68,12 @@ public class NotificationService extends Service {
                         long epochSecond = localDateTime.toEpochSecond(zone);
                         long currentEpochSecond = LocalDateTime.now().toEpochSecond(zone);
                         long minus = epochSecond - currentEpochSecond;
-                        Log.d("halinhit", task.getNotified() + "");
-
-                        if (minus <= 60 * 60 * 24 && minus >= 0 && task.getDone() == 0 && task.getNotified() == 0) {
+                        if (minus <= 60 * 60 * 24 && minus >= 0 && task.getDone() == 0) {
+                            task.setNotified(1);
+                            taskDAO.update(task);
                             NotificationUtils.showNotification(getApplicationContext(),
                                     "Công việc " + task.getTitle() + " sắp hết hạn, hãy hoàn thành nó ngay!"
                             );
-                            task.setNotified(1);
-                            taskDAO.update(task);
                         }
                     });
                     Thread.sleep(1000);

@@ -95,9 +95,10 @@ public class TaskDAO {
                 String f = c.getString(4);
                 String g = c.getString(5);
                 int h = c.getInt(6);
-                String i = c.getString(7);
-                int k = c.getInt(8);
-                list.add(new Task(a, b, d, e, f, g, h, i, k));
+                int i = c.getInt(7);
+                String k = c.getString(8);
+                int l = c.getInt(9);
+                list.add(new Task(a, b, d, e, f, g, h, i, k, l));
                 c.moveToNext();
             }
             c.close();
