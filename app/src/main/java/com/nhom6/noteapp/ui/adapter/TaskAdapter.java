@@ -15,6 +15,7 @@ import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.ItemTaskBinding;
 import com.nhom6.noteapp.extension.Format;
 import com.nhom6.noteapp.model.dao.TaskDAO;
+import com.nhom6.noteapp.model.dto.Category;
 import com.nhom6.noteapp.model.dto.Task;
 import com.nhom6.noteapp.ui.fragment.TaskDetailFragment;
 
@@ -35,6 +36,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
         taskDAO = new TaskDAO(mContext);
         this.taskClick = taskClick;
     }
+
+    public void setFilteredList(ArrayList<Task> filteredList) {
+        this.listData = filteredList;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override

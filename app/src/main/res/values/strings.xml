@@ -10,7 +10,7 @@
     <string name="hint_searchview">Search...</string>
     <string name="hint_namecategory">Name Category...</string>
     <string name="hint_describe">Describe...</string>
-    <string name="hint_work">Enter Work...</string>
+    <string name="hint_work">Enter work...</string>
 
     // button
     <string name="button_login">Login</string>

@@ -80,7 +80,7 @@
                 tools:ignore="MissingConstraints" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/img_filter"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
@@ -103,10 +103,11 @@
 
         <ImageView
             android:id="@+id/imgAddCategory"
-            android:layout_width="@dimen/img_size"
-            android:layout_height="@dimen/img_size"
-            android:src="@drawable/baseline_add_circle_24"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:src="@drawable/ic_add"
             android:backgroundTint="@color/orange"
+            android:padding="@dimen/margin_small"
             android:layout_margin="@dimen/margin_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

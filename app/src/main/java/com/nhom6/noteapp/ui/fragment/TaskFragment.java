@@ -7,8 +7,11 @@ import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -19,28 +22,29 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.nhom6.noteapp.extension.Constance;
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.DialogAddTaskBinding;
 import com.nhom6.noteapp.databinding.FragmentTaskBinding;
+import com.nhom6.noteapp.extension.Constance;
 import com.nhom6.noteapp.extension.Format;
 import com.nhom6.noteapp.model.dao.TaskDAO;
 import com.nhom6.noteapp.model.dto.Category;
 import com.nhom6.noteapp.model.dto.Task;
 import com.nhom6.noteapp.ui.adapter.TaskAdapter;
 import com.nhom6.noteapp.ui.dialog.DialogTaskEnd;
-import com.nhom6.noteapp.ui.viewmodel.SharedViewModel;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -48,7 +52,6 @@ import java.util.Locale;
 public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
 
     private FragmentTaskBinding binding;
-    private SharedViewModel sharedViewModel;
 
     Category category;
     DialogTaskEnd dialogTaskEnd;
@@ -68,9 +71,6 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dialogTaskEnd = new DialogTaskEnd();
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        sharedViewModel.getNameData().observe(this, nameObserver);
-
         Bundle data = getArguments();
         if(data!= null) {
             category = (Category) data.getSerializable(Constance.KEY_CATEGORY);
@@ -109,21 +109,35 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
         binding.rcvTasks.setLayoutManager(linearLayoutManager);
         binding.rcvTasks.setAdapter(taskAdapter);
 
+        binding.searchTask.clearFocus();
+        binding.searchTask.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                FinterList(newText);
+                return true;
+            }
+        });
+
         binding.imgAddTask.setOnClickListener(v -> {
 
-            Dialog dialog = new Dialog(getContext());
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            DialogAddTaskBinding bindingDialog = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_add_task, null, false);
-            dialog.setContentView(bindingDialog.getRoot());
-            Window window = dialog.getWindow();
-            if (window == null) {
-                return;
-            }
-            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams windowacc = window.getAttributes();
-            windowacc.gravity = Gravity.NO_GRAVITY;
-            window.setAttributes(windowacc);
+                Dialog dialog = new Dialog(getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                DialogAddTaskBinding bindingDialog = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_add_task, null, false);
+                dialog.setContentView(bindingDialog.getRoot());
+                Window window = dialog.getWindow();
+                if (window == null) {
+                    return;
+                }
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams windowacc = window.getAttributes();
+                windowacc.gravity = Gravity.NO_GRAVITY;
+                window.setAttributes(windowacc);
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
@@ -131,23 +145,18 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
             bindingDialog.tvTime.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-
-                    int mHour = calendar.get(Calendar.HOUR_OF_DAY);
-                    int mMinute = calendar.get(Calendar.MINUTE);
                     TimePickerDialog timePickerDialog = new TimePickerDialog(
                             getContext(),
                             new TimePickerDialog.OnTimeSetListener() {
                                 @Override
                                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                    // Xử lý giờ và phút ở đây
                                     String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
                                     bindingDialog.tvTime.setText(formattedTime);
                                 }
                             },
-                            calendar.get(Calendar.HOUR_OF_DAY), // Giờ hiện tại
-                            calendar.get(Calendar.MINUTE),      // Phút hiện tại
-                            true                                // 24-hour format
+                            calendar.get(Calendar.HOUR_OF_DAY),
+                            calendar.get(Calendar.MINUTE),
+                            true
                     );
 
                     timePickerDialog.show();
@@ -215,6 +224,97 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                     .popBackStack();
         });
 
+        registerForContextMenu(binding.imgFilter);
+
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.contentmenu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_alll:
+                taskAdapter.setFilteredList(listTask);
+                return true;
+            case R.id.menu_completed:
+                ArrayList<Task> completedList=new ArrayList<>();
+
+                for (Task task: listTask){
+                    if (task.getDone() == 1){
+                        completedList.add(task);
+                    }
+
+                }
+                if (completedList.isEmpty()){
+                    Toast.makeText(this.getContext(), "no data", Toast.LENGTH_SHORT).show();
+                }else {
+                    taskAdapter.setFilteredList(completedList);
+                }
+                return true;
+            case R.id.menu_not_completed:
+                ArrayList<Task> notcompletedList=new ArrayList<>();
+
+                for (Task task: listTask){
+                    if (task.getDone() == 0){
+                        notcompletedList.add(task);
+                    }
+
+                }
+                if (notcompletedList.isEmpty()){
+                    Toast.makeText(this.getContext(), "no data", Toast.LENGTH_SHORT).show();
+                }else {
+                    taskAdapter.setFilteredList(notcompletedList);
+                }
+                return true;
+            case R.id.menu_late:
+                ArrayList<Task> lateList=new ArrayList<>();
+
+                for (Task task: listTask){
+                    Calendar localCalendar = Calendar.getInstance();
+                    String givenTime = task.getDate() + " " + task.getTime();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+                    try {
+                        Date givenDate = dateFormat.parse(givenTime);
+                        Calendar givenCalendar = Calendar.getInstance();
+                        givenCalendar.setTime(givenDate);
+                        if (task.getDone() == 0 && localCalendar.after(givenCalendar) ){
+                            lateList.add(task);
+                        }
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (lateList.isEmpty()){
+                        Toast.makeText(this.getContext(), "no data", Toast.LENGTH_SHORT).show();
+                    }else {
+                        taskAdapter.setFilteredList(lateList);
+                    }
+                }
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void FinterList(String text) {
+        ArrayList<Task> filteredList=new ArrayList<>();
+
+        for (Task task: listTask){
+            if (task.getTitle().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(task);
+            }
+
+        }
+        if (filteredList.isEmpty()){
+            Toast.makeText(this.getContext(), "no data", Toast.LENGTH_SHORT).show();
+        }else {
+            taskAdapter.setFilteredList(filteredList);
+        }
     }
 
     private void replaceFragment(Fragment fragment, Bundle data) {

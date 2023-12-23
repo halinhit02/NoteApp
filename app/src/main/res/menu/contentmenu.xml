@@ -1,15 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/content_all"
-        tools:ignore="MenuTitle"
-        android:title="All"/>
-    <item android:id="@+id/content_finish"
-        tools:ignore="MenuTitle"
-        android:icon="@mipmap/ic_finish"
-        android:title="Done"/>
-    <item android:id="@+id/content_unfinish"
-        tools:ignore="MenuTitle"
-        android:icon="@mipmap/ic_unfinish"
-        android:title="Unfinished work"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_alll"
+        android:title="Tất cả"/>
+    <item
+        android:id="@+id/menu_completed"
+        android:title="Đã hoàn thành"
+        android:icon="@drawable/ic_completed" />
+    <item
+        android:id="@+id/menu_not_completed"
+        android:title="Chưa hoàn thành"
+        android:icon="@drawable/ic_not_completed" />
+    <item
+        android:id="@+id/menu_late"
+        android:title="Muộn"
+        android:icon="@drawable/ic_late" />
 </menu>
