@@ -8,6 +8,6 @@
 
     <dimen name="height_edittext">48dp</dimen>
 
-    <dimen name="img_size">40dp</dimen>
+    <dimen name="img_size">50dp</dimen>
 
 </resources>

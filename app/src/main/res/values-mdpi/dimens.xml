@@ -8,5 +8,5 @@
 
     <dimen name="height_edittext">46dp</dimen>
 
-    <dimen name="img_size">38dp</dimen>
+    <dimen name="img_size">48dp</dimen>
 </resources>

@@ -59,7 +59,7 @@
         </com.google.android.material.divider.MaterialDivider>
 
         <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchCategory"
+            android:id="@+id/searchTask"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_edittext"
             android:background="@drawable/custom_edittext"
@@ -90,7 +90,7 @@
                 tools:ignore="MissingConstraints" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/img_filter"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
