@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
+
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_medium">12dp</dimen>
+
+    <dimen name="height_edittext">44dp</dimen>
+
+    <dimen name="img_size">46dp</dimen>
+
+</resources>
