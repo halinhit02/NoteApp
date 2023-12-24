@@ -26,6 +26,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="start"
+                android:scaleType="fitCenter"
                 android:layout_weight="1"
                 android:src="@drawable/ic_back_foreground" />
 
@@ -36,6 +37,7 @@
                 android:layout_marginHorizontal="@dimen/margin_small"
                 android:layout_weight="8"
                 android:gravity="center"
+                android:layout_gravity="center_vertical"
                 android:text="Danh mục"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -46,6 +48,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="end"
                 android:layout_weight="1"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_send_foreground" />
         </LinearLayout>
         <com.google.android.material.divider.MaterialDivider
@@ -114,7 +117,7 @@
             android:id="@+id/imgAddTask"
             android:layout_width="@dimen/img_size"
             android:layout_height="@dimen/img_size"
-            android:src="@drawable/baseline_add_circle_24"
+            android:src="@drawable/ic_add"
             android:backgroundTint="@color/orange"
             android:layout_margin="@dimen/margin_small"
             app:layout_constraintBottom_toBottomOf="parent"

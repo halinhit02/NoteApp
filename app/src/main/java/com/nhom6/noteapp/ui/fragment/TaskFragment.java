@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import com.nhom6.noteapp.extension.Format;
 import com.nhom6.noteapp.model.dao.TaskDAO;
 import com.nhom6.noteapp.model.dto.Category;
 import com.nhom6.noteapp.model.dto.Task;
+import com.nhom6.noteapp.ui.activity.SendActivity;
 import com.nhom6.noteapp.ui.adapter.TaskAdapter;
 import com.nhom6.noteapp.ui.dialog.DialogTaskEnd;
 
@@ -121,6 +123,15 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                 FinterList(newText);
                 return true;
             }
+        });
+
+        binding.imgSend.setOnClickListener(v -> {
+            Intent intent = new Intent(requireActivity(), SendActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("categoryName", category.getName());
+            bundle.putInt("categoryId", category.getId());
+            intent.putExtras(bundle);
+            startActivity(intent);
         });
 
         binding.imgAddTask.setOnClickListener(v -> {
