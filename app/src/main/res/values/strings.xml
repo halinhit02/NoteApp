@@ -51,4 +51,5 @@
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="signup_des">create an account to use application</string>
+    <string name="label_status">Trạng thái</string>
 </resources>

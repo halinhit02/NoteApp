@@ -119,4 +119,17 @@ public class Task implements Serializable {
     public void setDate(String date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "title='" + title + '\'' +
+                ", des='" + des + '\'' +
+                ", note='" + note + '\'' +
+                ", time='" + time + '\'' +
+                ", date='" + date + '\'' +
+                ", done=" + done +
+                ", score='" + score + '\'' +
+                '}';
+    }
 }
