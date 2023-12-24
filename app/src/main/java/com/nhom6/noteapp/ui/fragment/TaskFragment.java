@@ -260,10 +260,9 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                 ArrayList<Task> notcompletedList=new ArrayList<>();
 
                 for (Task task: listTask){
-                    if (task.getDone() == 0){
+                    if (task.getDone() == 0 && Format.formatDateTimeToDate(task.getTime(), task.getDate()).isAfter(LocalDateTime.now())){
                         notcompletedList.add(task);
                     }
-
                 }
                 if (notcompletedList.isEmpty()){
                     Toast.makeText(this.getContext(), "no data", Toast.LENGTH_SHORT).show();
@@ -275,19 +274,9 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                 ArrayList<Task> lateList=new ArrayList<>();
 
                 for (Task task: listTask){
-                    Calendar localCalendar = Calendar.getInstance();
-                    String givenTime = task.getDate() + " " + task.getTime();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-
-                    try {
-                        Date givenDate = dateFormat.parse(givenTime);
-                        Calendar givenCalendar = Calendar.getInstance();
-                        givenCalendar.setTime(givenDate);
-                        if (task.getDone() == 0 && localCalendar.after(givenCalendar) ){
-                            lateList.add(task);
-                        }
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
+                    if(task.getDone() == 0
+                            && Format.formatDateTimeToDate(task.getTime(), task.getDate()).isBefore(LocalDateTime.now())){
+                        lateList.add(task);
                     }
                     if (lateList.isEmpty()){
                         Toast.makeText(this.getContext(), "no data", Toast.LENGTH_SHORT).show();
