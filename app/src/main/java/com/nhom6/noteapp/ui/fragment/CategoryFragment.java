@@ -1,9 +1,12 @@
 package com.nhom6.noteapp.ui.fragment;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +27,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.nhom6.noteapp.extension.Constance;
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.model.dto.User;
+import com.nhom6.noteapp.ui.activity.LanguageActivity;
+import com.nhom6.noteapp.ui.activity.MainActivity;
 import com.nhom6.noteapp.ui.adapter.Categoryadpter;
 import com.nhom6.noteapp.databinding.DialogAddCategoryBinding;
 import com.nhom6.noteapp.databinding.FragmentCategoryBinding;
 import com.nhom6.noteapp.model.dao.CategoryDAO;
 import com.nhom6.noteapp.model.dto.Category;
+import com.nhom6.noteapp.utils.SharePreferencesUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,6 +65,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
         if(data!= null) {
             user = (User) data.getSerializable(Constance.KEY_USER);
         }
+//        binding.tvNameUser.setText(SharePreferencesUtils.getString("NameUser",null));
     }
 
     @Override
@@ -73,6 +80,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
     private Categoryadpter categoryadpter;
     private ArrayList<Category> listCategory;
     private LinearLayoutManager linearLayoutManager;
+    private boolean isclickLang = true;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -83,6 +91,20 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
         categoryDAO = new CategoryDAO(getContext());
         listCategory = categoryDAO.getAll();
         categoryadpter = new Categoryadpter(getContext(),listCategory,this);
+
+
+        binding.imgLang.setOnClickListener(v->{
+            if(isclickLang){
+                isclickLang = false;
+                startActivity(new Intent(getActivity(), LanguageActivity.class));
+            }
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    isclickLang = true;
+                }
+            }, 500);
+        });
 
         binding.searchCategory.clearFocus();
         binding.searchCategory.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -122,9 +144,9 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
                 @Override
                 public void onClick(View v) {
                     if (bindingDialog.edtTitleCategory.getText().toString().trim().isEmpty()){
-                        bindingDialog.edtTitleCategory.setError("Can not leave the title blank");
+                        bindingDialog.edtTitleCategory.setError(getString(R.string.error_title_cate));
                     }if (bindingDialog.edtDesCategory.getText().toString().trim().isEmpty()){
-                        bindingDialog.edtDesCategory.setError("Can not leave the description blank");
+                        bindingDialog.edtDesCategory.setError(getString(R.string.error_des_cate));
                     }else {
                         Category category1 = new Category();
                         category1.setName(bindingDialog.edtTitleCategory.getText().toString().trim());
@@ -132,12 +154,12 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
                         category1.setDes(bindingDialog.edtDesCategory.getText().toString().trim());
                         long res = categoryDAO.insert(category1);
                         if (res>0){
-                            Toast.makeText(getContext(),"Added category successfully",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),getString(R.string.notification_add_cate_success),Toast.LENGTH_SHORT).show();
                             listCategory.clear();
                             listCategory.addAll(categoryDAO.getAll());
                             categoryadpter.notifyDataSetChanged();
                         }else {
-                            Toast.makeText(getContext(),"Add failure category",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),getString(R.string.notification_add_cate_failure),Toast.LENGTH_SHORT).show();
                         }
                         dialog.dismiss();
                     }

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NoteApp</string>
     //hint
+    <string name="language">Language</string>
     <string name="hint_username">User name...</string>
     <string name="hint_password">Password...</string>
     <string name="hint_fullname">FullName...</string>
@@ -18,6 +19,7 @@
     <string name="button_add">Add</string>
     <string name="button_ok">Oke</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_complete">Complete</string>
     //textview
     <string name="textview_login">Login</string>
     <string name="textview_register">sign up</string>
@@ -34,21 +36,37 @@
     <string name="error_username">Username  cannot be blank</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="label_name_task">Tên công việc</string>
-    <string name="label_not_note">Không có ghi chú</string>
-    <string name="label_note">Ghi chú</string>
-    <string name="label_score">Tự chấm điểm</string>
-    <string name="label_des">Mô tả</string>
-    <string name="label_time_end">Thời hạn</string>
-    <string name="label_success">Hoàn thành</string>
-    <string name="input_note">Nhập vào ghi chú...</string>
-    <string name="label_confirm">Xác nhận hoàn thành công việc này ?</string>
+    <string name="label_name_task">Task name</string>
+    <string name="label_not_note">No note</string>
+    <string name="label_note">Note</string>
+    <string name="label_score">Score yourself</string>
+    <string name="label_des">Description</string>
+    <string name="label_status">Status</string>
+    <string name="label_time_end">Duration</string>
+    <string name="label_success">Completed</string>
+    <string name="input_note">Enter note...</string>
+    <string name="label_confirm">Confirm completion of this job ?</string>
     <string name="label_oke">Oke</string>
-    <string name="label_cancel">Hủy</string>
-    <string name="toast">\"Phải phải chấm điểm và nhập ghi chú để hoàn thành\"</string>
-    <string name="label_da_cap_nhat">Đã cập nhật công việc</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="toast">Must score and enter notes to complete</string>
+    <string name="label_da_cap_nhat">Job updated</string>
     <string name="signin_des">Login to use the application\'s functions.</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="signup_des">create an account to use application</string>
+
+    <string name="notification_delete_success">Deleted successfully</string>
+    <string name="notification_delete_failed">Delete failed</string>
+
+    <string name="title_dialog_delete">Are you sure you want to delete ?</string>
+    <string name="notification_add_task_success">Added task successfully</string>
+    <string name="notification_add_task_failure">"Add failure task"</string>
+    <string name="notification_add_cate_success">Added category successfully</string>
+    <string name="notification_add_cate_failure">Add failure category</string>
+    <string name="error_time">Select time to limit</string>
+    <string name="error_date">Select the date to limit</string>
+    <string name="error_title">You have not entered a task yet</string>
+    <string name="error_des">You have not entered a description yet</string>
+    <string name="error_title_cate">Can not leave the title blank</string>
+    <string name="error_des_cate">Can not leave the description blank</string>
 </resources>

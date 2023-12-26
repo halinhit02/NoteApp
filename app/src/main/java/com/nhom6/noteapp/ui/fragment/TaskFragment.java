@@ -135,98 +135,7 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
         });
 
         binding.imgAddTask.setOnClickListener(v -> {
-
-                Dialog dialog = new Dialog(getContext());
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                DialogAddTaskBinding bindingDialog = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_add_task, null, false);
-                dialog.setContentView(bindingDialog.getRoot());
-                Window window = dialog.getWindow();
-                if (window == null) {
-                    return;
-                }
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams windowacc = window.getAttributes();
-                windowacc.gravity = Gravity.NO_GRAVITY;
-                window.setAttributes(windowacc);
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
-
-            bindingDialog.tvTime.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TimePickerDialog timePickerDialog = new TimePickerDialog(
-                            getContext(),
-                            new TimePickerDialog.OnTimeSetListener() {
-                                @Override
-                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                    String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
-                                    bindingDialog.tvTime.setText(formattedTime);
-                                }
-                            },
-                            calendar.get(Calendar.HOUR_OF_DAY),
-                            calendar.get(Calendar.MINUTE),
-                            true
-                    );
-
-                    timePickerDialog.show();
-                }
-            });
-
-            bindingDialog.tvDate.setOnClickListener(v1 -> {
-                DatePickerDialog dialog1 = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-                        GregorianCalendar c = new GregorianCalendar(year, month, dayOfMonth);
-                        bindingDialog.tvDate.setText(sdf.format(c.getTime()));
-                    }
-                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
-                dialog1.show();
-            });
-
-            bindingDialog.imgCancel.setOnClickListener(v12 -> dialog.cancel());
-
-            bindingDialog.btnAddTask.setOnClickListener(v13 -> {
-                if (bindingDialog.tvTime.getText().toString().trim().isEmpty()) {
-                    bindingDialog.tvTime.setError("Select time to limit");
-                }
-                if (bindingDialog.tvDate.getText().toString().trim().isEmpty()) {
-                    bindingDialog.tvDate.setError("select the date to limit");
-                }
-                if (bindingDialog.edtTask.getText().toString().trim().isEmpty()) {
-                    bindingDialog.edtTask.setError("You have not entered a task yet");
-                }
-                if (bindingDialog.edtDesTask.getText().toString().trim().isEmpty()) {
-                    bindingDialog.edtDesTask.setError("You have not entered a description yet");
-                } else {
-                    Task task = new Task();
-                    task.setTitle(bindingDialog.edtTask.getText().toString().trim());
-                    task.setDate(bindingDialog.tvDate.getText().toString().trim());
-                    task.setTime(bindingDialog.tvTime.getText().toString().trim());
-                    task.setDes(bindingDialog.edtDesTask.getText().toString().trim());
-                    task.setScore("0/10");
-                    task.setNote("");
-                    task.setId_category(id_category);
-                    task.setDone(0);
-                    task.setNotified(0);
-                    Toast.makeText(getActivity(), task.getId_category() + "", Toast.LENGTH_SHORT).show();
-                    long res = taskDAO.insert(task);
-                    if (res > 0) {
-                        Toast.makeText(getContext(), "Added task successfully", Toast.LENGTH_SHORT).show();
-                        listTask.clear();
-                        listTask.addAll(taskDAO.getAllByCategory(String.valueOf(category.getId())));
-                        taskAdapter.notifyDataSetChanged();
-                    } else {
-                        Toast.makeText(getContext(), "Add failure task", Toast.LENGTH_SHORT).show();
-                    }
-                    dialog.dismiss();
-                }
-            });
-
-
-            dialog.show();
+                showDialog();
         });
 
         binding.imgBack.setOnClickListener(v -> {
@@ -237,6 +146,98 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
 
         registerForContextMenu(binding.imgFilter);
 
+    }
+
+    private void showDialog() {
+        Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DialogAddTaskBinding bindingDialog = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_add_task, null, false);
+        dialog.setContentView(bindingDialog.getRoot());
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowacc = window.getAttributes();
+        windowacc.gravity = Gravity.NO_GRAVITY;
+        window.setAttributes(windowacc);
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
+
+        bindingDialog.tvTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
+                                bindingDialog.tvTime.setText(formattedTime);
+                            }
+                        },
+                        calendar.get(Calendar.HOUR_OF_DAY),
+                        calendar.get(Calendar.MINUTE),
+                        true
+                );
+
+                timePickerDialog.show();
+            }
+        });
+
+        bindingDialog.tvDate.setOnClickListener(v1 -> {
+            DatePickerDialog dialog1 = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                    GregorianCalendar c = new GregorianCalendar(year, month, dayOfMonth);
+                    bindingDialog.tvDate.setText(sdf.format(c.getTime()));
+                }
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
+            dialog1.show();
+        });
+
+        bindingDialog.imgCancel.setOnClickListener(v12 -> dialog.cancel());
+
+        bindingDialog.btnAddTask.setOnClickListener(v13 -> {
+            if (bindingDialog.tvTime.getText().toString().trim().isEmpty()) {
+                bindingDialog.tvTime.setError(getString(R.string.error_time));
+            }
+            if (bindingDialog.tvDate.getText().toString().trim().isEmpty()) {
+                bindingDialog.tvDate.setError(getString(R.string.error_date));
+            }
+            if (bindingDialog.edtTask.getText().toString().trim().isEmpty()) {
+                bindingDialog.edtTask.setError(getString(R.string.error_title));
+            }
+            if (bindingDialog.edtDesTask.getText().toString().trim().isEmpty()) {
+                bindingDialog.edtDesTask.setError(getString(R.string.error_des));
+            } else {
+                Task task = new Task();
+                task.setTitle(bindingDialog.edtTask.getText().toString().trim());
+                task.setDate(bindingDialog.tvDate.getText().toString().trim());
+                task.setTime(bindingDialog.tvTime.getText().toString().trim());
+                task.setDes(bindingDialog.edtDesTask.getText().toString().trim());
+                task.setScore("0/10");
+                task.setNote("");
+                task.setId_category(id_category);
+                task.setDone(0);
+                task.setNotified(0);
+                Toast.makeText(getActivity(), task.getId_category() + "", Toast.LENGTH_SHORT).show();
+                long res = taskDAO.insert(task);
+                if (res > 0) {
+                    Toast.makeText(getContext(), getString(R.string.notification_add_task_success), Toast.LENGTH_SHORT).show();
+                    listTask.clear();
+                    listTask.addAll(taskDAO.getAllByCategory(String.valueOf(category.getId())));
+                    taskAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.notification_add_task_failure), Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     @Override
@@ -259,12 +260,13 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                     if (task.getDone() == 1){
                         completedList.add(task);
                     }
-
                 }
                 if (completedList.isEmpty()){
                     Toast.makeText(this.getContext(), "no data", Toast.LENGTH_SHORT).show();
                 }else {
-                    taskAdapter.setFilteredList(completedList);
+                    taskAdapter = new TaskAdapter(completedList,getContext(),this);
+                    binding.rcvTasks.setLayoutManager(linearLayoutManager);
+                    binding.rcvTasks.setAdapter(taskAdapter);
                 }
                 return true;
             case R.id.menu_not_completed:
@@ -278,7 +280,9 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                 if (notcompletedList.isEmpty()){
                     Toast.makeText(this.getContext(), "no data", Toast.LENGTH_SHORT).show();
                 }else {
-                    taskAdapter.setFilteredList(notcompletedList);
+                    taskAdapter = new TaskAdapter(notcompletedList,getContext(),this);
+                    binding.rcvTasks.setLayoutManager(linearLayoutManager);
+                    binding.rcvTasks.setAdapter(taskAdapter);
                 }
                 return true;
             case R.id.menu_late:
@@ -292,7 +296,9 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                     if (lateList.isEmpty()){
                         Toast.makeText(this.getContext(), "no data", Toast.LENGTH_SHORT).show();
                     }else {
-                        taskAdapter.setFilteredList(lateList);
+                        taskAdapter = new TaskAdapter(lateList,getContext(),this);
+                        binding.rcvTasks.setLayoutManager(linearLayoutManager);
+                        binding.rcvTasks.setAdapter(taskAdapter);
                     }
                 }
                 return true;
@@ -330,7 +336,7 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
     @Override
     public void onLongClick(Task item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Are you sure you want to delete ?");
+        builder.setTitle(getString(R.string.title_dialog_delete));
         builder.setPositiveButton("OK", (dialogInterface, i) -> {
             int check = taskDAO.delete(item.getId());
             switch (check) {
@@ -338,16 +344,16 @@ public class TaskFragment extends Fragment implements TaskAdapter.TaskClick {
                     listTask.clear();
                     listTask.addAll(taskDAO.getAllByCategory(String.valueOf(id_category)));
                     taskAdapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.notification_delete_success), Toast.LENGTH_SHORT).show();
                     break;
                 case 0:
-                    Toast.makeText(getActivity(), "Delete failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.notification_delete_failed), Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;
             }
         });
-        builder.setNegativeButton("Cancle", (dialogInterface, i) -> dialogInterface.cancel());
+        builder.setNegativeButton(getString(R.string.button_cancel), (dialogInterface, i) -> dialogInterface.cancel());
         builder.show();
     }
 

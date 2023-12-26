@@ -22,6 +22,7 @@ import com.nhom6.noteapp.ui.fragment.CategoryFragment;
 import com.nhom6.noteapp.model.dao.CategoryDAO;
 import com.nhom6.noteapp.model.dao.TaskDAO;
 import com.nhom6.noteapp.model.dao.UserDAO;
+import com.nhom6.noteapp.utils.SystemUtils;
 
 public class MainActivity extends AppCompatActivity {
     private UserDAO userDAO;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SystemUtils.setLocale(this);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         user = (User) getIntent().getSerializableExtra(Constance.KEY_USER);
         setContentView(binding.getRoot());
