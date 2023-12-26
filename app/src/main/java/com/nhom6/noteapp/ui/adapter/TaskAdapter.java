@@ -56,7 +56,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
         holder.bind(listData.get(position));
         holder.itemView.setOnLongClickListener (v-> {
             taskClick.onLongClick(listData.get(position));
-            return false;
+            return true;
         });
         holder.itemView.setOnClickListener( v-> {
             taskClick.onClick(listData.get(position));
@@ -90,6 +90,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
                         && LocalDateTime.now().plusHours(6)
                         .until(Format.formatDateTimeToDate(task.getTime(), task.getDate()), ChronoUnit.HOURS) < 6) {
                     ViewCompat.setBackgroundTintList(binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.orange)));
+                }
+                else {
+                    ViewCompat.setBackgroundTintList(binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.boderitem)));
                 }
             }
 
