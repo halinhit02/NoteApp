@@ -15,6 +15,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_back"
@@ -112,6 +117,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
+            android:padding="@dimen/_8sdp"
             android:background="@color/white"
             android:hint="@string/input_note"
             app:layout_constraintEnd_toEndOf="parent"
@@ -187,7 +193,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_btn_success"
-        android:text="Hoàn thành"
+        android:text="@string/button_complete"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"

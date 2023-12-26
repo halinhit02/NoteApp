@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NoteApp</string>
+    //gợi ý
+    <string name="language">Ngôn ngữ</string>
+    <string name="hint_username">Tên người dùng...</string>
+    <string name="hint_password">Mật khẩu...</string>
+    <string name="hint_fullname">Tên đầy đủ...</string>
+    <string name="hint_username_register">Tên người dùng...</string>
+    <string name="hint_password_register">Mật khẩu...</string>
+    <string name="hint_confirmpassword_register">Xác nhận mật khẩu...</string>
+    <string name="hint_searchview">Tìm kiếm...</string>
+    <string name="hint_namecategory">Tên danh mục...</string>
+    <string name="hint_describe">Mô tả...</string>
+    <string name="hint_work">Nhập công việc...</string>
+
+    // cái nút
+    <string name="button_login">Đăng nhập</string>
+    <string name="button_register">Đăng ký</string>
+    <string name="button_add">Thêm</string>
+    <string name="button_ok">Được</string>
+    <string name="button_cancel">Hủy</string>
+    <string name="button_complete">Hoàn thành</string>
+    //xem văn bản
+    <string name="textview_login">Đăng nhập</string>
+    <string name="textview_register">đăng ký</string>
+    <string name="textview_asforanaccount">Chưa có tài khoản?</string>
+    <string name="textview_filter">Bộ lọc</string>
+    <string name="textview_addcategory">Thêm danh mục</string>
+    <string name="textview_signout">Bạn có chắc chắn muốn đăng xuất không?</string>
+    <string name="textview_add_task">Thêm nhiệm vụ</string>
+    <string name="textview_duration">Thời lượng</string>
+    <string name="textview_task">Nhiệm vụ</string>
+    <string name="textview_des">Mô tả</string>
+
+    //lỗi văn bản
+    <string name="error_username">Tên người dùng không được để trống</string>
+
+    <string name="hello_blank_fragment">Xin chào đoạn trống</string>
+    <string name="label_name_task">Tên nhiệm vụ</string>
+    <string name="label_not_note">Không có ghi chú</string>
+    <string name="label_note">Ghi chú</string>
+    <string name="label_score">Hãy tự chấm điểm</string>
+    <string name="label_des">Mô tả</string>
+    <string name="label_status">Trạng thái</string>
+    <string name="label_time_end">Thời lượng</string>
+    <string name="label_success">Đã hoàn thành</string>
+    <string name="input_note">Nhập ghi chú...</string>
+    <string name="label_confirm">Xác nhận hoàn thành công việc này ?</string>
+    <string name="label_oke">Được</string>
+    <string name="label_cancel">Hủy</string>
+    <string name="toast">Phải chấm điểm và nhập ghi chú để hoàn thành</string>
+    <string name="label_da_cap_nhat">Đã cập nhật công việc</string>
+    <string name="signin_des">Đăng nhập để sử dụng các chức năng của ứng dụng.</string>
+    <string name="sign_in">Đăng nhập</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="signup_des">tạo tài khoản để sử dụng ứng dụng</string>
+
+    <string name="notification_delete_success">Đã xóa thành công</string>
+    <string name="notification_delete_failed">Xóa không thành công</string>
+
+    <string name="title_dialog_delete">Bạn có chắc chắn muốn xóa không?</string>
+    <string name="notification_add_task_success">Thêm nhiệm vụ thành công</string>
+    <string name="notification_add_task_failure">"Thêm nhiệm vụ thất bại"</string>
+    <string name="notification_add_cate_success">Đã thêm danh mục thành công</string>
+    <string name="notification_add_cate_failure">Thêm danh mục lỗi</string>
+    <string name="error_time">Chọn thời gian để giới hạn</string>
+    <string name="error_date">Chọn ngày giới hạn</string>
+    <string name="error_title">Bạn chưa nhập nhiệm vụ</string>
+    <string name="error_des">Bạn chưa nhập mô tả</string>
+    <string name="error_title_cate">Không thể để trống tiêu đề</string>
+    <string name="error_des_cate">Không thể để trống mô tả</string>
+</resources>

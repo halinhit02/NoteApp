@@ -15,11 +15,20 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="@dimen/padding_small"
-            android:weightSum="9"
+            android:weightSum="10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/img_Lang"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:scaleType="centerCrop"
+                android:layout_weight="1"
+                android:src="@drawable/ic_language" />
 
             <TextView
                 android:id="@+id/tvNameUser"
@@ -61,34 +70,7 @@
             app:queryHint="@string/hint_searchview"
             tools:ignore="MissingConstraints" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchCategory"
-            tools:ignore="MissingConstraints,UseCompoundDrawables">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/textview_filter"
-                android:textStyle="bold"
-                tools:ignore="MissingConstraints" />
-
-            <ImageView
-                android:id="@+id/img_filter"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_filter_foreground"
-                tools:ignore="ContentDescription,MissingConstraints" />
-
-        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvCategory"
@@ -98,7 +80,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+            app:layout_constraintTop_toBottomOf="@+id/searchCategory"
             tools:ignore="MissingConstraints"
             tools:listitem="@layout/itemcategory" />
 

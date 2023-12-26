@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (checkLogin(userName, password)) {
                 SharePreferencesUtils.putBoolean("isSignIn", true);
+                SharePreferencesUtils.putString("NameUser",user.getName());
                 LoginSuccess();
             }
         });

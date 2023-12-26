@@ -54,9 +54,21 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
     @Override
     public void onBindViewHolder(@NonNull TaskViewholder holder, int position) {
         holder.bind(listData.get(position));
+
+        if (listData.get(position).getDone() == 1) {
+            ViewCompat.setBackgroundTintList(holder.binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.green)));
+        } else if (listData.get(position).getDone() == 0
+                && Format.formatDateTimeToDate(listData.get(position).getTime(), listData.get(position).getDate()).isBefore(LocalDateTime.now())) {
+            ViewCompat.setBackgroundTintList(holder.binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.red)));
+        } else if ((listData.get(position).getDone() == 0
+                && LocalDateTime.now().plusHours(6)
+                .until(Format.formatDateTimeToDate(listData.get(position).getTime(), listData.get(position).getDate()), ChronoUnit.HOURS) < 6)) {
+            ViewCompat.setBackgroundTintList(holder.binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.orange)));
+        }
+
         holder.itemView.setOnLongClickListener (v-> {
             taskClick.onLongClick(listData.get(position));
-            return true;
+            return false;
         });
         holder.itemView.setOnClickListener( v-> {
             taskClick.onClick(listData.get(position));
@@ -81,19 +93,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewholder
                 binding.tvTimeTask.setText(task.getTime() + " date " + task.getDate());
                 binding.tvDesTask.setText(task.getDes());
                 binding.tvPoinTask.setText(task.getScore());
-                if (task.getDone() == 1) {
-                    ViewCompat.setBackgroundTintList(binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.green)));
-                } else if (task.getDone() == 0
-                        && Format.formatDateTimeToDate(task.getTime(), task.getDate()).isBefore(LocalDateTime.now())) {
-                    ViewCompat.setBackgroundTintList(binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.red)));
-                } else if (task.getDone() == 0
-                        && LocalDateTime.now().plusHours(6)
-                        .until(Format.formatDateTimeToDate(task.getTime(), task.getDate()), ChronoUnit.HOURS) < 6) {
-                    ViewCompat.setBackgroundTintList(binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.orange)));
-                }
-                else {
-                    ViewCompat.setBackgroundTintList(binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.boderitem)));
-                }
+//                if (task.getDone() == 1) {
+//                    ViewCompat.setBackgroundTintList(binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.green)));
+//                } else if (task.getDone() == 0
+//                        && Format.formatDateTimeToDate(task.getTime(), task.getDate()).isBefore(LocalDateTime.now())) {
+//                    ViewCompat.setBackgroundTintList(binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.red)));
+//                } else if (task.getDone() == 0
+//                        && LocalDateTime.now().plusHours(6)
+//                        .until(Format.formatDateTimeToDate(task.getTime(), task.getDate()), ChronoUnit.HOURS) < 6) {
+//                    ViewCompat.setBackgroundTintList(binding.statusTask, ColorStateList.valueOf(mContext.getColor(R.color.orange)));
+//                }
             }
 
         }
