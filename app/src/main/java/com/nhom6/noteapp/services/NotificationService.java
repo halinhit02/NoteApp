@@ -79,7 +79,7 @@ public class NotificationService extends Service {
                             NotificationUtils.showNotification(getApplicationContext(),
                                     "Công việc " + task.getTitle() + " đã hết hạn."
                             );
-                        } else if (leftTime <= 60 * 24 && task.getDone() == 0 && task.getNotified() != 1) {
+                        } else if (leftTime <= 60 * 60 && task.getDone() == 0 && task.getNotified() != 1) {
                             // Gán giá trị cho công việc đã được thông báo.
                             task.setNotified(1);
                             // Lưu công việc vừa sửa.
