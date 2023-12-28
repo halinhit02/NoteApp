@@ -28,7 +28,8 @@
             android:textSize="16sp"
             android:id="@+id/btnOke"
             android:text="@string/button_ok"
-
+            android:textAllCaps="false"
+            android:textColor="@color/white"
             android:padding="@dimen/padding_small"
             android:layout_margin="@dimen/margin_small"
             android:backgroundTint="@color/orange"/>
@@ -39,6 +40,8 @@
             android:textStyle="bold"
             android:layout_margin="@dimen/margin_small"
             android:padding="@dimen/padding_small"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:text="@string/button_cancel"
             android:id="@+id/btnCancelSignout"

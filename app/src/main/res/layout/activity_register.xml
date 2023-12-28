@@ -125,6 +125,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
+                android:background="@drawable/custom_edittext"
+                android:textAllCaps="false"
+                android:textSize="18sp"
                 android:backgroundTint="@color/orange_FB9A09"
                 android:text="@string/button_register"
                 android:textColor="@color/white" />
