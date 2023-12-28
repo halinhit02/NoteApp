@@ -123,7 +123,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
 
         binding.rcvCategory.setAdapter(categoryadpter);
 
-        binding.imgAddCategory.setOnClickListener(v -> {
+        binding.imgAddCategory.setOnClickListener(view -> {
             Dialog dialog = new Dialog(getContext());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             DialogAddCategoryBinding bindingDialog = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout. dialog_add_category, null, false);
