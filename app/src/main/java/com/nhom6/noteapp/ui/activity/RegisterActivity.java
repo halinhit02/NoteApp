@@ -10,6 +10,7 @@ import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.databinding.ActivityRegisterBinding;
 import com.nhom6.noteapp.model.dao.UserDAO;
 import com.nhom6.noteapp.model.dto.User;
+import com.nhom6.noteapp.utils.SystemUtils;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -26,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
+        SystemUtils.setLocale(this);
         setContentView(binding.getRoot());
 
         binding.btnRegister.setOnClickListener(view->{

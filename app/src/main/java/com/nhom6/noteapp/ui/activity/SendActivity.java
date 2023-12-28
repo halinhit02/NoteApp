@@ -15,6 +15,7 @@ import com.nhom6.noteapp.databinding.ActivitySendBinding;
 import com.nhom6.noteapp.model.dao.TaskDAO;
 import com.nhom6.noteapp.model.dto.Task;
 import com.nhom6.noteapp.ui.adapter.TaskSendAdapter;
+import com.nhom6.noteapp.utils.SystemUtils;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ public class SendActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Khai báo binding để ánh xạ tới layout
         binding = DataBindingUtil.setContentView(this, R.layout.activity_send);
+        SystemUtils.setLocale(this);
         setContentView(binding.getRoot());
 
         // Lấy dữ liệu danh mục gồm id và tên gửi từ màn hình trước

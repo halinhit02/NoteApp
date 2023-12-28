@@ -28,6 +28,7 @@ import com.nhom6.noteapp.extension.Constance;
 import com.nhom6.noteapp.R;
 import com.nhom6.noteapp.model.dto.User;
 import com.nhom6.noteapp.ui.activity.LanguageActivity;
+import com.nhom6.noteapp.ui.activity.LoginActivity;
 import com.nhom6.noteapp.ui.activity.MainActivity;
 import com.nhom6.noteapp.ui.adapter.Categoryadpter;
 import com.nhom6.noteapp.databinding.DialogAddCategoryBinding;
@@ -194,12 +195,17 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
             btnCancel = dialog.findViewById(R.id.btnCancelSignout);
             btnOke = dialog.findViewById(R.id.btnOke);
 
-            btnOke.setOnClickListener(v12 -> getActivity().finish());
+            btnOke.setOnClickListener(v12 ->{
+                startActivity(new Intent(getActivity(),LoginActivity.class));
+                getActivity().finish();
+                SharePreferencesUtils.putBoolean("isSignIn",false);
+                dialog.dismiss();
+                    });
+
 
             btnCancel.setOnClickListener(v1 -> {
-                dialog.cancel();
+                dialog.dismiss();
             });
-
             dialog.show();
         });
     }
