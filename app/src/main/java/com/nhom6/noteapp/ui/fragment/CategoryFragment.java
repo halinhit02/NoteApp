@@ -84,7 +84,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
     private boolean isclickLang = true;
 
     @Override
-    public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         linearLayoutManager = new LinearLayoutManager(getContext());
@@ -93,8 +93,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
         listCategory = categoryDAO.getAll();
         categoryadpter = new Categoryadpter(getContext(),listCategory,this);
 
-
-        binding.imgLang.setOnClickListener(v->{
+        binding.imgLang.setOnClickListener(view1->{
             if(isclickLang){
                 isclickLang = false;
                 startActivity(new Intent(getActivity(), LanguageActivity.class));
