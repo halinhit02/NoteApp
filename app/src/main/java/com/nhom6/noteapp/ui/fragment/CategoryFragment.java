@@ -84,7 +84,7 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
     private boolean isclickLang = true;
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         linearLayoutManager = new LinearLayoutManager(getContext());
