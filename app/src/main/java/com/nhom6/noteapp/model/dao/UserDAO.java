@@ -58,7 +58,6 @@ public class UserDAO {
     }
     @SuppressLint("Range")
     private List<User> getData(String sql, String...selectionArgs) {
-
         List<User> list = new ArrayList<>();
         Cursor c = db.rawQuery(sql,selectionArgs);
         while (c.moveToNext()){
@@ -67,7 +66,6 @@ public class UserDAO {
             obj.setName(c.getString(c.getColumnIndex("name_user")));
             obj.setUserName(c.getString(c.getColumnIndex("username_user")));
             obj.setPassword(c.getString(c.getColumnIndex("password_user")));
-
             list.add(obj);
         }
         return list;

@@ -190,7 +190,6 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
             windowacc.gravity = Gravity.NO_GRAVITY ;
             window.setAttributes(windowacc);
 
-
             Button btnCancel,btnOke;
             btnCancel = dialog.findViewById(R.id.btnCancelSignout);
             btnOke = dialog.findViewById(R.id.btnOke);
@@ -217,13 +216,12 @@ public class CategoryFragment extends Fragment implements Categoryadpter.Categor
             if (category1.getName().toLowerCase().contains(text.toLowerCase())){
                 filteredList.add(category1);
             }
-
         }
+
         if (filteredList.isEmpty()){
             Toast.makeText(this.getContext(), "no data", Toast.LENGTH_SHORT).show();
-        }else {
-            categoryadpter.setFilteredList(filteredList);
         }
+        categoryadpter.setFilteredList(filteredList);
     }
 
     private  void replaceFragment(Fragment fragment, Bundle data) {

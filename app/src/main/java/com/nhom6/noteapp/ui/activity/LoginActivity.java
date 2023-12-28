@@ -19,7 +19,6 @@ import com.nhom6.noteapp.model.dao.UserDAO;
 import com.nhom6.noteapp.model.dto.User;
 import com.nhom6.noteapp.services.NotificationService;
 import com.nhom6.noteapp.utils.SharePreferencesUtils;
-import com.nhom6.noteapp.utils.SystemUtils;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -35,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        SystemUtils.setLocale(this);
         setContentView(binding.getRoot());
         SharePreferencesUtils.init(getApplicationContext());
         if (SharePreferencesUtils.getBoolean("isSignIn", false)) {
@@ -49,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
 
             if (checkLogin(userName, password)) {
                 SharePreferencesUtils.putBoolean("isSignIn", true);
-                SharePreferencesUtils.putString("NameUser",user.getName());
                 LoginSuccess();
             }
         });
@@ -75,10 +72,12 @@ public class LoginActivity extends AppCompatActivity {
     private boolean checkLogin(String userName, String password) {
         if (checkBlank()) {
             ArrayList<User> users = userDAO.getUserByUsername(userName);
+            //check khác rỗng
             if (users.size() == 0) {
                 showDialog("Username is not available");
                 return false;
             } else {
+                //check pass
                 user = users.get(0);
                 if (!BCrypt.checkpw(password, user.getPassword())) {
                     showDialog("Wrong password or username");

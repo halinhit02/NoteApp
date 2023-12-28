@@ -51,7 +51,7 @@ public class Categoryadpter extends RecyclerView.Adapter<Categoryadpter.Category
     @Override
     public void onBindViewHolder(@NonNull CategoryViewholder holder, int position) {
         holder.bind(listData.get(position));
-        holder.itemView.setOnLongClickListener(v -> {
+        holder.itemView.setOnLongClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Are you sure you want to delete ?");
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
